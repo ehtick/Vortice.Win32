@@ -569,6 +569,20 @@
 		,"Attrs":[]
 	}
 	,{
+		"Name":"GUID_WICPixelFormat24bppRGBGain"
+		,"Type":{"Kind":"Native","Name":"Guid"}
+		,"ValueType":"String"
+		,"Value":"a5022b24-7109-443b-9948-25b6ed8f39fd"
+		,"Attrs":[]
+	}
+	,{
+		"Name":"GUID_WICPixelFormat32bppBGRGain"
+		,"Type":{"Kind":"Native","Name":"Guid"}
+		,"ValueType":"String"
+		,"Value":"837d6738-208a-43e0-8995-79ab74407402"
+		,"Attrs":[]
+	}
+	,{
 		"Name":"GUID_WICPixelFormat16bppBGR555"
 		,"Type":{"Kind":"Native","Name":"Guid"}
 		,"ValueType":"String"
@@ -1591,6 +1605,13 @@
 		,"Attrs":[]
 	}
 	,{
+		"Name":"GUID_MetadataFormatGainMap"
+		,"Type":{"Kind":"Native","Name":"Guid"}
+		,"ValueType":"String"
+		,"Value":"568d3138-c446-4ec2-a7a8-59abb16d21e3"
+		,"Attrs":[]
+	}
+	,{
 		"Name":"CLSID_WICUnknownMetadataReader"
 		,"Type":{"Kind":"Native","Name":"Guid"}
 		,"ValueType":"String"
@@ -2192,6 +2213,20 @@
 		,"Value":"d1ce58a8-06e0-4b6f-8fc1-577560bd5ad9"
 		,"Attrs":[]
 	}
+	,{
+		"Name":"CLSID_WICGainMapMetadataReader"
+		,"Type":{"Kind":"Native","Name":"Guid"}
+		,"ValueType":"String"
+		,"Value":"3ac32daf-27b9-4af5-b0ab-d1189dcf34b3"
+		,"Attrs":[]
+	}
+	,{
+		"Name":"CLSID_WICGainMapMetadataWriter"
+		,"Type":{"Kind":"Native","Name":"Guid"}
+		,"ValueType":"String"
+		,"Value":"6f845268-a92e-4a02-b002-a67c362800b2"
+		,"Attrs":[]
+	}
 ]
 
 ,"Types":[
@@ -2486,6 +2521,39 @@
 		,"IntegerBase":"Int32"
 	}
 	,{
+		"Name":"WICBitmapToneMappingMode"
+		,"Architectures":[]
+		,"Platform":null
+		,"Kind":"Enum"
+		,"Flags":false
+		,"Scoped":false
+		,"Values":[
+			{"Name":"WICBitmapToneMappingMode_None","Value":0}
+			,{"Name":"WICBitmapToneMappingMode_Default","Value":1}
+			,{"Name":"WICBitmapToneMappingMode_D2D","Value":2}
+			,{"Name":"WICBitmapToneMappingMode_GainMap","Value":3}
+		]
+		,"IntegerBase":"Int32"
+	}
+	,{
+		"Name":"WICBitmapChainType"
+		,"Architectures":[]
+		,"Platform":null
+		,"Kind":"Enum"
+		,"Flags":false
+		,"Scoped":false
+		,"Values":[
+			{"Name":"WICBitmapChainType_Alternate","Value":1}
+			,{"Name":"WICBitmapChainType_Layer","Value":2}
+			,{"Name":"WICBitmapChainType_Preview","Value":3}
+			,{"Name":"WICBitmapChainType_Thumbnail","Value":4}
+			,{"Name":"WICBitmapChainType_AlphaMap","Value":5}
+			,{"Name":"WICBitmapChainType_DepthMap","Value":6}
+			,{"Name":"WICBitmapChainType_GainMap","Value":7}
+		]
+		,"IntegerBase":"Int32"
+	}
+	,{
 		"Name":"WICGifLogicalScreenDescriptorProperties"
 		,"Architectures":[]
 		,"Platform":null
@@ -2767,6 +2835,8 @@
 		,"Scoped":false
 		,"Values":[
 			{"Name":"WICHeifOrientation","Value":1}
+			,{"Name":"WICHeifLayeredImageCanvasColor","Value":2}
+			,{"Name":"WICHeifLayeredImageLayerPositions","Value":3}
 		]
 		,"IntegerBase":"Int32"
 	}
@@ -2834,6 +2904,18 @@
 		,"Values":[
 			{"Name":"WICJpegXLAnimFrameDurationInTicks","Value":1}
 			,{"Name":"WICJpegXLAnimFrameName","Value":2}
+		]
+		,"IntegerBase":"Int32"
+	}
+	,{
+		"Name":"WICGainMapProperties"
+		,"Architectures":[]
+		,"Platform":null
+		,"Kind":"Enum"
+		,"Flags":false
+		,"Scoped":false
+		,"Values":[
+			{"Name":"WICGainMapMetadata","Value":1}
 		]
 		,"IntegerBase":"Int32"
 	}
@@ -3218,7 +3300,7 @@
 				,"Platform":null
 				,"Attrs":[]
 				,"Params":[
-					{"Name":"prc","Type":{"Kind":"PointerTo","Child":{"Kind":"ApiRef","Name":"WICRect","TargetKind":"Default","Api":"Graphics.Imaging","Parents":[]}},"Attrs":["In","Const"]}
+					{"Name":"prc","Type":{"Kind":"PointerTo","Child":{"Kind":"ApiRef","Name":"WICRect","TargetKind":"Default","Api":"Graphics.Imaging","Parents":[]}},"Attrs":["In","Optional","Const"]}
 					,{"Name":"cbStride","Type":{"Kind":"Native","Name":"UInt32"},"Attrs":["In"]}
 					,{"Name":"cbBufferSize","Type":{"Kind":"Native","Name":"UInt32"},"Attrs":["In"]}
 					,{"Name":"pbBuffer","Type":{"Kind":"LPArray","NullNullTerm":false,"CountConst":-1,"CountParamIndex":2,"Child":{"Kind":"Native","Name":"Byte"}},"Attrs":["Out"]}
@@ -3377,6 +3459,46 @@
 				,"Params":[
 					{"Name":"pISource","Type":{"Kind":"ApiRef","Name":"IWICBitmapSource","TargetKind":"Com","Api":"Graphics.Imaging","Parents":[]},"Attrs":["In"]}
 					,{"Name":"options","Type":{"Kind":"ApiRef","Name":"WICBitmapTransformOptions","TargetKind":"Default","Api":"Graphics.Imaging","Parents":[]},"Attrs":["In"]}
+				]
+			}
+		]
+	}
+	,{
+		"Name":"IWICBitmapToneMapper"
+		,"Architectures":[]
+		,"Platform":null
+		,"Kind":"Com"
+		,"Guid":"44728ded-1edf-4fe9-b50b-c89a264c9439"
+		,"Interface":{"Kind":"ApiRef","Name":"IWICBitmapSource","TargetKind":"Com","Api":"Graphics.Imaging","Parents":[]}
+		,"Methods":[
+			{
+				"Name":"InitializeForHdrTarget"
+				,"SetLastError":false
+				,"ReturnType":{"Kind":"ApiRef","Name":"HRESULT","TargetKind":"Default","Api":"Foundation","Parents":[]}
+				,"ReturnAttrs":[]
+				,"Architectures":[]
+				,"Platform":null
+				,"Attrs":[]
+				,"Params":[
+					{"Name":"pISource","Type":{"Kind":"ApiRef","Name":"IWICBitmapSource","TargetKind":"Com","Api":"Graphics.Imaging","Parents":[]},"Attrs":["In"]}
+					,{"Name":"guidDstFormat","Type":{"Kind":"PointerTo","Child":{"Kind":"Native","Name":"Guid"}},"Attrs":["In"]}
+					,{"Name":"fLuminanceInNits","Type":{"Kind":"Native","Name":"Single"},"Attrs":["In"]}
+					,{"Name":"fWhiteLevelInNits","Type":{"Kind":"Native","Name":"Single"},"Attrs":["In"]}
+					,{"Name":"mode","Type":{"Kind":"ApiRef","Name":"WICBitmapToneMappingMode","TargetKind":"Default","Api":"Graphics.Imaging","Parents":[]},"Attrs":["In"]}
+				]
+			}
+			,{
+				"Name":"InitializeForSdrTarget"
+				,"SetLastError":false
+				,"ReturnType":{"Kind":"ApiRef","Name":"HRESULT","TargetKind":"Default","Api":"Foundation","Parents":[]}
+				,"ReturnAttrs":[]
+				,"Architectures":[]
+				,"Platform":null
+				,"Attrs":[]
+				,"Params":[
+					{"Name":"pISource","Type":{"Kind":"ApiRef","Name":"IWICBitmapSource","TargetKind":"Com","Api":"Graphics.Imaging","Parents":[]},"Attrs":["In"]}
+					,{"Name":"guidDstFormat","Type":{"Kind":"PointerTo","Child":{"Kind":"Native","Name":"Guid"}},"Attrs":["In"]}
+					,{"Name":"mode","Type":{"Kind":"ApiRef","Name":"WICBitmapToneMappingMode","TargetKind":"Default","Api":"Graphics.Imaging","Parents":[]},"Attrs":["In"]}
 				]
 			}
 		]
@@ -4505,6 +4627,80 @@
 		]
 	}
 	,{
+		"Name":"IWICBitmapFrameChainReader"
+		,"Architectures":[]
+		,"Platform":null
+		,"Kind":"Com"
+		,"Guid":"0c599495-a120-4222-9130-a8c29410bd0b"
+		,"Interface":{"Kind":"ApiRef","Name":"IUnknown","TargetKind":"Com","Api":"System.Com","Parents":[]}
+		,"Methods":[
+			{
+				"Name":"GetChainedFrameCount"
+				,"SetLastError":false
+				,"ReturnType":{"Kind":"ApiRef","Name":"HRESULT","TargetKind":"Default","Api":"Foundation","Parents":[]}
+				,"ReturnAttrs":[]
+				,"Architectures":[]
+				,"Platform":null
+				,"Attrs":[]
+				,"Params":[
+					{"Name":"chainType","Type":{"Kind":"ApiRef","Name":"WICBitmapChainType","TargetKind":"Default","Api":"Graphics.Imaging","Parents":[]},"Attrs":["In"]}
+					,{"Name":"pCount","Type":{"Kind":"PointerTo","Child":{"Kind":"Native","Name":"UInt32"}},"Attrs":["Out"]}
+				]
+			}
+			,{
+				"Name":"GetChainedFrame"
+				,"SetLastError":false
+				,"ReturnType":{"Kind":"ApiRef","Name":"HRESULT","TargetKind":"Default","Api":"Foundation","Parents":[]}
+				,"ReturnAttrs":[]
+				,"Architectures":[]
+				,"Platform":null
+				,"Attrs":[]
+				,"Params":[
+					{"Name":"chainType","Type":{"Kind":"ApiRef","Name":"WICBitmapChainType","TargetKind":"Default","Api":"Graphics.Imaging","Parents":[]},"Attrs":["In"]}
+					,{"Name":"index","Type":{"Kind":"Native","Name":"UInt32"},"Attrs":["In"]}
+					,{"Name":"ppIBitmapFrame","Type":{"Kind":"PointerTo","Child":{"Kind":"ApiRef","Name":"IWICBitmapFrameDecode","TargetKind":"Com","Api":"Graphics.Imaging","Parents":[]}},"Attrs":["Out"]}
+				]
+			}
+		]
+	}
+	,{
+		"Name":"IWICBitmapFrameChainWriter"
+		,"Architectures":[]
+		,"Platform":null
+		,"Kind":"Com"
+		,"Guid":"40d9ea28-4768-47b3-8c12-558a48e98e38"
+		,"Interface":{"Kind":"ApiRef","Name":"IUnknown","TargetKind":"Com","Api":"System.Com","Parents":[]}
+		,"Methods":[
+			{
+				"Name":"AppendFrameToChain"
+				,"SetLastError":false
+				,"ReturnType":{"Kind":"ApiRef","Name":"HRESULT","TargetKind":"Default","Api":"Foundation","Parents":[]}
+				,"ReturnAttrs":[]
+				,"Architectures":[]
+				,"Platform":null
+				,"Attrs":[]
+				,"Params":[
+					{"Name":"chainType","Type":{"Kind":"ApiRef","Name":"WICBitmapChainType","TargetKind":"Default","Api":"Graphics.Imaging","Parents":[]},"Attrs":["In"]}
+					,{"Name":"ppIFrameEncode","Type":{"Kind":"PointerTo","Child":{"Kind":"ApiRef","Name":"IWICBitmapFrameEncode","TargetKind":"Com","Api":"Graphics.Imaging","Parents":[]}},"Attrs":["Out"]}
+					,{"Name":"ppIEncoderOptions","Type":{"Kind":"PointerTo","Child":{"Kind":"ApiRef","Name":"IPropertyBag2","TargetKind":"Com","Api":"System.Com.StructuredStorage","Parents":[]}},"Attrs":["In","Out"]}
+				]
+			}
+			,{
+				"Name":"DoesSupportChainType"
+				,"SetLastError":false
+				,"ReturnType":{"Kind":"ApiRef","Name":"HRESULT","TargetKind":"Default","Api":"Foundation","Parents":[]}
+				,"ReturnAttrs":[]
+				,"Architectures":[]
+				,"Platform":null
+				,"Attrs":[]
+				,"Params":[
+					{"Name":"chainType","Type":{"Kind":"ApiRef","Name":"WICBitmapChainType","TargetKind":"Default","Api":"Graphics.Imaging","Parents":[]},"Attrs":["In"]}
+					,{"Name":"pfIsSupported","Type":{"Kind":"PointerTo","Child":{"Kind":"ApiRef","Name":"BOOL","TargetKind":"Default","Api":"Foundation","Parents":[]}},"Attrs":["Out"]}
+				]
+			}
+		]
+	}
+	,{
 		"Name":"IWICProgressiveLevelControl"
 		,"Architectures":[]
 		,"Platform":"windows6.1"
@@ -4593,6 +4789,147 @@
 				,"Attrs":[]
 				,"Params":[
 					{"Name":"pfLuminanceInNits","Type":{"Kind":"PointerTo","Child":{"Kind":"Native","Name":"Single"}},"Attrs":["Out","RetVal"]}
+				]
+			}
+		]
+	}
+	,{
+		"Name":"IWICDisplayAdaptationControl2"
+		,"Architectures":[]
+		,"Platform":null
+		,"Kind":"Com"
+		,"Guid":"d7508d29-3ab7-447e-a676-4d80d7de726b"
+		,"Interface":{"Kind":"ApiRef","Name":"IWICDisplayAdaptationControl","TargetKind":"Com","Api":"Graphics.Imaging","Parents":[]}
+		,"Methods":[
+			{
+				"Name":"SetSdrWhiteLevel"
+				,"SetLastError":false
+				,"ReturnType":{"Kind":"ApiRef","Name":"HRESULT","TargetKind":"Default","Api":"Foundation","Parents":[]}
+				,"ReturnAttrs":[]
+				,"Architectures":[]
+				,"Platform":null
+				,"Attrs":[]
+				,"Params":[
+					{"Name":"fWhiteLevelInNits","Type":{"Kind":"Native","Name":"Single"},"Attrs":["In"]}
+				]
+			}
+			,{
+				"Name":"GetSdrWhiteLevel"
+				,"SetLastError":false
+				,"ReturnType":{"Kind":"ApiRef","Name":"HRESULT","TargetKind":"Default","Api":"Foundation","Parents":[]}
+				,"ReturnAttrs":[]
+				,"Architectures":[]
+				,"Platform":null
+				,"Attrs":[]
+				,"Params":[
+					{"Name":"pfWhiteLevelInNits","Type":{"Kind":"PointerTo","Child":{"Kind":"Native","Name":"Single"}},"Attrs":["Out","RetVal"]}
+				]
+			}
+			,{
+				"Name":"SetToneMappingMode"
+				,"SetLastError":false
+				,"ReturnType":{"Kind":"ApiRef","Name":"HRESULT","TargetKind":"Default","Api":"Foundation","Parents":[]}
+				,"ReturnAttrs":[]
+				,"Architectures":[]
+				,"Platform":null
+				,"Attrs":[]
+				,"Params":[
+					{"Name":"mode","Type":{"Kind":"ApiRef","Name":"WICBitmapToneMappingMode","TargetKind":"Default","Api":"Graphics.Imaging","Parents":[]},"Attrs":["In"]}
+				]
+			}
+			,{
+				"Name":"GetToneMappingMode"
+				,"SetLastError":false
+				,"ReturnType":{"Kind":"ApiRef","Name":"HRESULT","TargetKind":"Default","Api":"Foundation","Parents":[]}
+				,"ReturnAttrs":[]
+				,"Architectures":[]
+				,"Platform":null
+				,"Attrs":[]
+				,"Params":[
+					{"Name":"mode","Type":{"Kind":"PointerTo","Child":{"Kind":"ApiRef","Name":"WICBitmapToneMappingMode","TargetKind":"Default","Api":"Graphics.Imaging","Parents":[]}},"Attrs":["Out","RetVal"]}
+				]
+			}
+			,{
+				"Name":"DoesSupportToneMappingMode"
+				,"SetLastError":false
+				,"ReturnType":{"Kind":"ApiRef","Name":"HRESULT","TargetKind":"Default","Api":"Foundation","Parents":[]}
+				,"ReturnAttrs":[]
+				,"Architectures":[]
+				,"Platform":null
+				,"Attrs":[]
+				,"Params":[
+					{"Name":"mode","Type":{"Kind":"ApiRef","Name":"WICBitmapToneMappingMode","TargetKind":"Default","Api":"Graphics.Imaging","Parents":[]},"Attrs":["In"]}
+					,{"Name":"pfIsSupported","Type":{"Kind":"PointerTo","Child":{"Kind":"ApiRef","Name":"BOOL","TargetKind":"Default","Api":"Foundation","Parents":[]}},"Attrs":["Out"]}
+				]
+			}
+		]
+	}
+	,{
+		"Name":"IWICD3DTextureSource"
+		,"Architectures":[]
+		,"Platform":null
+		,"Kind":"Com"
+		,"Guid":"caf65cc4-8ebe-4718-a21f-8dbf40bb7e25"
+		,"Interface":{"Kind":"ApiRef","Name":"IUnknown","TargetKind":"Com","Api":"System.Com","Parents":[]}
+		,"Methods":[
+			{
+				"Name":"GetTexture"
+				,"SetLastError":false
+				,"ReturnType":{"Kind":"ApiRef","Name":"HRESULT","TargetKind":"Default","Api":"Foundation","Parents":[]}
+				,"ReturnAttrs":[]
+				,"Architectures":[]
+				,"Platform":null
+				,"Attrs":[]
+				,"Params":[
+					{"Name":"pD3DDevice","Type":{"Kind":"ApiRef","Name":"IUnknown","TargetKind":"Com","Api":"System.Com","Parents":[]},"Attrs":["In"]}
+					,{"Name":"pID3DTextureOptions","Type":{"Kind":"ApiRef","Name":"IPropertyBag2","TargetKind":"Com","Api":"System.Com.StructuredStorage","Parents":[]},"Attrs":["In","Optional"]}
+					,{"Name":"riid","Type":{"Kind":"PointerTo","Child":{"Kind":"Native","Name":"Guid"}},"Attrs":["In","Const"]}
+					,{"Name":"ppTexture","Type":{"Kind":"PointerTo","Child":{"Kind":"PointerTo","Child":{"Kind":"Native","Name":"Void"}}},"Attrs":["Out"]}
+				]
+			}
+			,{
+				"Name":"GetTransformedTexture"
+				,"SetLastError":false
+				,"ReturnType":{"Kind":"ApiRef","Name":"HRESULT","TargetKind":"Default","Api":"Foundation","Parents":[]}
+				,"ReturnAttrs":[]
+				,"Architectures":[]
+				,"Platform":null
+				,"Attrs":[]
+				,"Params":[
+					{"Name":"prc","Type":{"Kind":"PointerTo","Child":{"Kind":"ApiRef","Name":"WICRect","TargetKind":"Default","Api":"Graphics.Imaging","Parents":[]}},"Attrs":["In","Optional","Const"]}
+					,{"Name":"uiWidth","Type":{"Kind":"Native","Name":"UInt32"},"Attrs":["In"]}
+					,{"Name":"uiHeight","Type":{"Kind":"Native","Name":"UInt32"},"Attrs":["In"]}
+					,{"Name":"pguidDstFormat","Type":{"Kind":"PointerTo","Child":{"Kind":"Native","Name":"Guid"}},"Attrs":["In","Optional","Const"]}
+					,{"Name":"dstTransform","Type":{"Kind":"ApiRef","Name":"WICBitmapTransformOptions","TargetKind":"Default","Api":"Graphics.Imaging","Parents":[]},"Attrs":["In"]}
+					,{"Name":"pD3DDevice","Type":{"Kind":"ApiRef","Name":"IUnknown","TargetKind":"Com","Api":"System.Com","Parents":[]},"Attrs":["In"]}
+					,{"Name":"pID3DTextureOptions","Type":{"Kind":"ApiRef","Name":"IPropertyBag2","TargetKind":"Com","Api":"System.Com.StructuredStorage","Parents":[]},"Attrs":["In","Optional"]}
+					,{"Name":"riid","Type":{"Kind":"PointerTo","Child":{"Kind":"Native","Name":"Guid"}},"Attrs":["In","Const"]}
+					,{"Name":"ppTexture","Type":{"Kind":"PointerTo","Child":{"Kind":"PointerTo","Child":{"Kind":"Native","Name":"Void"}}},"Attrs":["Out"]}
+				]
+			}
+			,{
+				"Name":"DoesSupportD3DDeviceType"
+				,"SetLastError":false
+				,"ReturnType":{"Kind":"ApiRef","Name":"HRESULT","TargetKind":"Default","Api":"Foundation","Parents":[]}
+				,"ReturnAttrs":[]
+				,"Architectures":[]
+				,"Platform":null
+				,"Attrs":[]
+				,"Params":[
+					{"Name":"riid","Type":{"Kind":"PointerTo","Child":{"Kind":"Native","Name":"Guid"}},"Attrs":["In","Const"]}
+					,{"Name":"pfIsSupported","Type":{"Kind":"PointerTo","Child":{"Kind":"ApiRef","Name":"BOOL","TargetKind":"Default","Api":"Foundation","Parents":[]}},"Attrs":["Out"]}
+				]
+			}
+			,{
+				"Name":"GetD3DTextureOptions"
+				,"SetLastError":false
+				,"ReturnType":{"Kind":"ApiRef","Name":"HRESULT","TargetKind":"Default","Api":"Foundation","Parents":[]}
+				,"ReturnAttrs":[]
+				,"Architectures":[]
+				,"Platform":null
+				,"Attrs":[]
+				,"Params":[
+					{"Name":"ppID3DTextureOptions","Type":{"Kind":"PointerTo","Child":{"Kind":"ApiRef","Name":"IPropertyBag2","TargetKind":"Com","Api":"System.Com.StructuredStorage","Parents":[]}},"Attrs":["Out","ComOutPtr"]}
 				]
 			}
 		]
@@ -5576,6 +5913,9 @@
 			,{"Name":"WICHeifCompressionNone","Value":1}
 			,{"Name":"WICHeifCompressionHEVC","Value":2}
 			,{"Name":"WICHeifCompressionAV1","Value":3}
+			,{"Name":"WICHeifCompressionJpegXL","Value":4}
+			,{"Name":"WICHeifCompressionBrotli","Value":5}
+			,{"Name":"WICHeifCompressionDeflate","Value":6}
 		]
 		,"IntegerBase":"Int32"
 	}

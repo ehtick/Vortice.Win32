@@ -80,7 +80,7 @@
 		,"Platform":null
 		,"Kind":"Enum"
 		,"Flags":false
-		,"Scoped":false
+		,"Scoped":true
 		,"Values":[
 			{"Name":"InstanceLuid","Value":0}
 			,{"Name":"DriverVersion","Value":1}
@@ -131,7 +131,7 @@
 		,"Platform":null
 		,"Kind":"Enum"
 		,"Flags":false
-		,"Scoped":false
+		,"Scoped":true
 		,"Values":[
 			{"Name":"Local","Value":0}
 			,{"Name":"NonLocal","Value":1}
@@ -144,7 +144,7 @@
 		,"Platform":null
 		,"Kind":"Enum"
 		,"Flags":false
-		,"Scoped":false
+		,"Scoped":true
 		,"Values":[
 			{"Name":"AdapterListStale","Value":0}
 			,{"Name":"AdapterNoLongerValid","Value":1}
@@ -159,7 +159,7 @@
 		,"Platform":null
 		,"Kind":"Enum"
 		,"Flags":false
-		,"Scoped":false
+		,"Scoped":true
 		,"Values":[
 			{"Name":"Hardware","Value":0}
 			,{"Name":"MinimumPower","Value":1}
@@ -173,7 +173,7 @@
 		,"Platform":null
 		,"Kind":"Enum"
 		,"Flags":false
-		,"Scoped":false
+		,"Scoped":true
 		,"Values":[
 			{"Name":"Graphics","Value":0}
 			,{"Name":"Compute","Value":1}
@@ -188,7 +188,7 @@
 		,"Platform":null
 		,"Kind":"Enum"
 		,"Flags":true
-		,"Scoped":false
+		,"Scoped":true
 		,"Values":[
 			{"Name":"None","Value":0}
 			,{"Name":"D3D11","Value":1}
@@ -202,7 +202,7 @@
 		,"Platform":null
 		,"Kind":"Enum"
 		,"Flags":true
-		,"Scoped":false
+		,"Scoped":true
 		,"Values":[
 			{"Name":"None","Value":0}
 			,{"Name":"GPU","Value":1}
@@ -330,7 +330,7 @@
 		,"Platform":null
 		,"Kind":"Enum"
 		,"Flags":false
-		,"Scoped":false
+		,"Scoped":true
 		,"Values":[
 			{"Name":"Dedicated","Value":0}
 			,{"Name":"Shared","Value":1}

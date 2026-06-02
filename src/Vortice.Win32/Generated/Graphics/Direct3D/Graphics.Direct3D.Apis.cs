@@ -257,6 +257,30 @@ public static partial class Apis
 		}
 	}
 
+	public static ref readonly Guid CLSID_D3DShaderCacheInstallerFactory
+	{
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		get
+		{
+			ReadOnlySpan<byte> data = [
+				0x0B, 0x5A, 0x19, 0x16,
+				0x7C, 0x60,
+				0xF1, 0x41,
+				0xBF,
+				0x03,
+				0xC7,
+				0x69,
+				0x4D,
+				0x60,
+				0xA8,
+				0xD4
+			];
+
+			Debug.Assert(data.Length == Unsafe.SizeOf<Guid>());
+			return ref Unsafe.As<byte, Guid>(ref MemoryMarshal.GetReference(data));
+		}
+	}
+
 	public const DriverType D3D_DRIVER_TYPE_UNKNOWN = DriverType.Unknown;
 	public const DriverType D3D_DRIVER_TYPE_HARDWARE = DriverType.Hardware;
 	public const DriverType D3D_DRIVER_TYPE_REFERENCE = DriverType.Reference;
@@ -568,5 +592,8 @@ public static partial class Apis
 	public const FormatComponentInterpretation D3DFCI_UINT = FormatComponentInterpretation.D3DFCI_UINT;
 	public const FormatComponentInterpretation D3DFCI_UNORM_SRGB = FormatComponentInterpretation.D3DFCI_UNORM_SRGB;
 	public const FormatComponentInterpretation D3DFCI_BIASED_FIXED_2_8 = FormatComponentInterpretation.D3DFCI_BIASED_FIXED_2_8;
+	public const ShaderCacheAppRegistrationScope D3D_SHADER_CACHE_APP_REGISTRATION_SCOPE_USER = ShaderCacheAppRegistrationScope.User;
+	public const ShaderCacheAppRegistrationScope D3D_SHADER_CACHE_APP_REGISTRATION_SCOPE_SYSTEM = ShaderCacheAppRegistrationScope.System;
+	public const ShaderCacheTargetFlags D3D_SHADER_CACHE_TARGET_FLAG_NONE = ShaderCacheTargetFlags.D3D_SHADER_CACHE_TARGET_FLAG_NONE;
 }
 

@@ -344,6 +344,51 @@ public enum WICComponentSigning
 	Disabled = -2147483648,
 }
 
+/// <include file='../Imaging.xml' path='doc/member[@name="WICBitmapToneMappingMode"]/*' />
+/// <unmanaged>WICBitmapToneMappingMode</unmanaged>
+public enum WICBitmapToneMappingMode
+{
+	/// <include file='../Imaging.xml' path='doc/member[@name="WICBitmapToneMappingMode::WICBitmapToneMappingMode_None"]/*' />
+	/// <unmanaged>WICBitmapToneMappingMode_None</unmanaged>
+	None = 0,
+	/// <include file='../Imaging.xml' path='doc/member[@name="WICBitmapToneMappingMode::WICBitmapToneMappingMode_Default"]/*' />
+	/// <unmanaged>WICBitmapToneMappingMode_Default</unmanaged>
+	Default = 1,
+	/// <include file='../Imaging.xml' path='doc/member[@name="WICBitmapToneMappingMode::WICBitmapToneMappingMode_D2D"]/*' />
+	/// <unmanaged>WICBitmapToneMappingMode_D2D</unmanaged>
+	D2D = 2,
+	/// <include file='../Imaging.xml' path='doc/member[@name="WICBitmapToneMappingMode::WICBitmapToneMappingMode_GainMap"]/*' />
+	/// <unmanaged>WICBitmapToneMappingMode_GainMap</unmanaged>
+	GainMap = 3,
+}
+
+/// <include file='../Imaging.xml' path='doc/member[@name="WICBitmapChainType"]/*' />
+/// <unmanaged>WICBitmapChainType</unmanaged>
+public enum WICBitmapChainType
+{
+	/// <include file='../Imaging.xml' path='doc/member[@name="WICBitmapChainType::WICBitmapChainType_Alternate"]/*' />
+	/// <unmanaged>WICBitmapChainType_Alternate</unmanaged>
+	Alternate = 1,
+	/// <include file='../Imaging.xml' path='doc/member[@name="WICBitmapChainType::WICBitmapChainType_Layer"]/*' />
+	/// <unmanaged>WICBitmapChainType_Layer</unmanaged>
+	Layer = 2,
+	/// <include file='../Imaging.xml' path='doc/member[@name="WICBitmapChainType::WICBitmapChainType_Preview"]/*' />
+	/// <unmanaged>WICBitmapChainType_Preview</unmanaged>
+	Preview = 3,
+	/// <include file='../Imaging.xml' path='doc/member[@name="WICBitmapChainType::WICBitmapChainType_Thumbnail"]/*' />
+	/// <unmanaged>WICBitmapChainType_Thumbnail</unmanaged>
+	Thumbnail = 4,
+	/// <include file='../Imaging.xml' path='doc/member[@name="WICBitmapChainType::WICBitmapChainType_AlphaMap"]/*' />
+	/// <unmanaged>WICBitmapChainType_AlphaMap</unmanaged>
+	AlphaMap = 5,
+	/// <include file='../Imaging.xml' path='doc/member[@name="WICBitmapChainType::WICBitmapChainType_DepthMap"]/*' />
+	/// <unmanaged>WICBitmapChainType_DepthMap</unmanaged>
+	DepthMap = 6,
+	/// <include file='../Imaging.xml' path='doc/member[@name="WICBitmapChainType::WICBitmapChainType_GainMap"]/*' />
+	/// <unmanaged>WICBitmapChainType_GainMap</unmanaged>
+	GainMap = 7,
+}
+
 /// <include file='../Imaging.xml' path='doc/member[@name="WICGifLogicalScreenDescriptorProperties"]/*' />
 /// <unmanaged>WICGifLogicalScreenDescriptorProperties</unmanaged>
 public enum WICGifLogicalScreenDescriptorProperties
@@ -657,6 +702,12 @@ public enum WICHeifProperties
 	/// <include file='../Imaging.xml' path='doc/member[@name="WICHeifProperties::WICHeifOrientation"]/*' />
 	/// <unmanaged>WICHeifOrientation</unmanaged>
 	Orientation = 1,
+	/// <include file='../Imaging.xml' path='doc/member[@name="WICHeifProperties::WICHeifLayeredImageCanvasColor"]/*' />
+	/// <unmanaged>WICHeifLayeredImageCanvasColor</unmanaged>
+	LayeredImageCanvasColor = 2,
+	/// <include file='../Imaging.xml' path='doc/member[@name="WICHeifProperties::WICHeifLayeredImageLayerPositions"]/*' />
+	/// <unmanaged>WICHeifLayeredImageLayerPositions</unmanaged>
+	LayeredImageLayerPositions = 3,
 }
 
 /// <include file='../Imaging.xml' path='doc/member[@name="WICHeifHdrProperties"]/*' />
@@ -723,6 +774,15 @@ public enum WICJpegXLAnimFrameProperties
 	/// <include file='../Imaging.xml' path='doc/member[@name="WICJpegXLAnimFrameProperties::WICJpegXLAnimFrameName"]/*' />
 	/// <unmanaged>WICJpegXLAnimFrameName</unmanaged>
 	Name = 2,
+}
+
+/// <include file='../Imaging.xml' path='doc/member[@name="WICGainMapProperties"]/*' />
+/// <unmanaged>WICGainMapProperties</unmanaged>
+public enum WICGainMapProperties
+{
+	/// <include file='../Imaging.xml' path='doc/member[@name="WICGainMapProperties::WICGainMapMetadata"]/*' />
+	/// <unmanaged>WICGainMapMetadata</unmanaged>
+	Metadata = 1,
 }
 
 /// <include file='../Imaging.xml' path='doc/member[@name="WICSectionAccessLevel"]/*' />
@@ -906,6 +966,15 @@ public enum WICHeifCompressionOption
 	/// <include file='../Imaging.xml' path='doc/member[@name="WICHeifCompressionOption::WICHeifCompressionAV1"]/*' />
 	/// <unmanaged>WICHeifCompressionAV1</unmanaged>
 	WICHeifCompressionAV1 = 3,
+	/// <include file='../Imaging.xml' path='doc/member[@name="WICHeifCompressionOption::WICHeifCompressionJpegXL"]/*' />
+	/// <unmanaged>WICHeifCompressionJpegXL</unmanaged>
+	WICHeifCompressionJpegXL = 4,
+	/// <include file='../Imaging.xml' path='doc/member[@name="WICHeifCompressionOption::WICHeifCompressionBrotli"]/*' />
+	/// <unmanaged>WICHeifCompressionBrotli</unmanaged>
+	WICHeifCompressionBrotli = 5,
+	/// <include file='../Imaging.xml' path='doc/member[@name="WICHeifCompressionOption::WICHeifCompressionDeflate"]/*' />
+	/// <unmanaged>WICHeifCompressionDeflate</unmanaged>
+	WICHeifCompressionDeflate = 6,
 }
 
 /// <include file='../Imaging.xml' path='doc/member[@name="WICNamedWhitePoint"]/*' />

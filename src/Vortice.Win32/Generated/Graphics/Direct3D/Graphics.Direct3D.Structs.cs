@@ -9,6 +9,20 @@
 
 namespace Vortice.Win32.Graphics.Direct3D;
 
+
+/// <include file='../Direct3D.xml' path='doc/member[@name="D3D_VERSION_NUMBER"]/*' />
+/// <unmanaged>D3D_VERSION_NUMBER</unmanaged>
+[StructLayout(LayoutKind.Explicit)]
+public partial struct VersionNumber
+{
+	/// <include file='../Direct3D.xml' path='doc/member[@name="D3D_VERSION_NUMBER::Version"]/*' />
+	[FieldOffset(0)]
+	public ulong Version;
+
+	/// <include file='../Direct3D.xml' path='doc/member[@name="D3D_VERSION_NUMBER::VersionParts"]/*' />
+	[FieldOffset(0)]
+	public unsafe fixed ushort VersionParts[4];
+}
 /// <include file='../Direct3D.xml' path='doc/member[@name="D3D_SHADER_MACRO"]/*' />
 /// <unmanaged>D3D_SHADER_MACRO</unmanaged>
 public partial struct ShaderMacro
@@ -18,4 +32,55 @@ public partial struct ShaderMacro
 
 	/// <include file='../Direct3D.xml' path='doc/member[@name="D3D_SHADER_MACRO::Definition"]/*' />
 	public unsafe byte* Definition;
+}
+
+/// <include file='../Direct3D.xml' path='doc/member[@name="D3D_SHADER_CACHE_PSDB_PROPERTIES"]/*' />
+/// <unmanaged>D3D_SHADER_CACHE_PSDB_PROPERTIES</unmanaged>
+public partial struct ShaderCachePsdbProperties
+{
+	/// <include file='../Direct3D.xml' path='doc/member[@name="D3D_SHADER_CACHE_PSDB_PROPERTIES::pAdapterFamily"]/*' />
+	public unsafe char* pAdapterFamily;
+
+	/// <include file='../Direct3D.xml' path='doc/member[@name="D3D_SHADER_CACHE_PSDB_PROPERTIES::pPsdbPath"]/*' />
+	public unsafe char* pPsdbPath;
+}
+
+/// <include file='../Direct3D.xml' path='doc/member[@name="D3D_SHADER_CACHE_COMPILER_PROPERTIES"]/*' />
+/// <unmanaged>D3D_SHADER_CACHE_COMPILER_PROPERTIES</unmanaged>
+public partial struct ShaderCacheCompilerProperties
+{
+	/// <include file='../Direct3D.xml' path='doc/member[@name="D3D_SHADER_CACHE_COMPILER_PROPERTIES::szAdapterFamily"]/*' />
+	public unsafe fixed char szAdapterFamily[128];
+
+	/// <include file='../Direct3D.xml' path='doc/member[@name="D3D_SHADER_CACHE_COMPILER_PROPERTIES::MinimumABISupportVersion"]/*' />
+	public ulong MinimumABISupportVersion;
+
+	/// <include file='../Direct3D.xml' path='doc/member[@name="D3D_SHADER_CACHE_COMPILER_PROPERTIES::MaximumABISupportVersion"]/*' />
+	public ulong MaximumABISupportVersion;
+
+	/// <include file='../Direct3D.xml' path='doc/member[@name="D3D_SHADER_CACHE_COMPILER_PROPERTIES::CompilerVersion"]/*' />
+	public VersionNumber CompilerVersion;
+
+	/// <include file='../Direct3D.xml' path='doc/member[@name="D3D_SHADER_CACHE_COMPILER_PROPERTIES::ApplicationProfileVersion"]/*' />
+	public VersionNumber ApplicationProfileVersion;
+}
+
+/// <include file='../Direct3D.xml' path='doc/member[@name="D3D_SHADER_CACHE_APPLICATION_DESC"]/*' />
+/// <unmanaged>D3D_SHADER_CACHE_APPLICATION_DESC</unmanaged>
+public partial struct ShaderCacheApplicationDescription
+{
+	/// <include file='../Direct3D.xml' path='doc/member[@name="D3D_SHADER_CACHE_APPLICATION_DESC::pExeFilename"]/*' />
+	public unsafe char* pExeFilename;
+
+	/// <include file='../Direct3D.xml' path='doc/member[@name="D3D_SHADER_CACHE_APPLICATION_DESC::pName"]/*' />
+	public unsafe char* pName;
+
+	/// <include file='../Direct3D.xml' path='doc/member[@name="D3D_SHADER_CACHE_APPLICATION_DESC::Version"]/*' />
+	public VersionNumber Version;
+
+	/// <include file='../Direct3D.xml' path='doc/member[@name="D3D_SHADER_CACHE_APPLICATION_DESC::pEngineName"]/*' />
+	public unsafe char* pEngineName;
+
+	/// <include file='../Direct3D.xml' path='doc/member[@name="D3D_SHADER_CACHE_APPLICATION_DESC::EngineVersion"]/*' />
+	public VersionNumber EngineVersion;
 }

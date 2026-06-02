@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using Newtonsoft.Json;
+
 namespace Generator;
 
 public class ApiDataArrayShape
@@ -76,14 +78,17 @@ public class ApiType
     // Com
     public string Guid { get; set; }
     public ApiDataType Interface { get; set; }
-    public IList<ApiType> Methods { get; set; } = new List<ApiType>();
+    public IList<ApiType> Methods { get; set; } = [];
 
     // Function
     public bool SetLastError { get; set; }
     public ApiDataType ReturnType { get; set; }
     public List<object> ReturnAttrs { get; set; }
-    public IList<ApiParameter> Params { get; set; } = new List<ApiParameter>();
+    public IList<ApiParameter> Params { get; set; } = [];
     public string DllImport { get; set; }
+
+    [JsonIgnore]
+    public int VTableIndex { get; set; }
 
     public override string ToString()
     {

@@ -1192,7 +1192,7 @@
 					{"Name":"dxcOutKind","Type":{"Kind":"ApiRef","Name":"DXC_OUT_KIND","TargetKind":"Default","Api":"Graphics.Direct3D.Dxc","Parents":[]},"Attrs":["In"]}
 					,{"Name":"iid","Type":{"Kind":"PointerTo","Child":{"Kind":"Native","Name":"Guid"}},"Attrs":["In","Const"]}
 					,{"Name":"ppvObject","Type":{"Kind":"PointerTo","Child":{"Kind":"PointerTo","Child":{"Kind":"Native","Name":"Void"}}},"Attrs":["Out","ComOutPtr","Optional"]}
-					,{"Name":"ppOutputName","Type":{"Kind":"PointerTo","Child":{"Kind":"ApiRef","Name":"IDxcBlobUtf16","TargetKind":"Com","Api":"Graphics.Direct3D.Dxc","Parents":[]}},"Attrs":["Out","ComOutPtr"]}
+					,{"Name":"ppOutputName","Type":{"Kind":"PointerTo","Child":{"Kind":"ApiRef","Name":"IDxcBlobUtf16","TargetKind":"Com","Api":"Graphics.Direct3D.Dxc","Parents":[]}},"Attrs":["Out","ComOutPtr","Optional"]}
 				]
 			}
 			,{

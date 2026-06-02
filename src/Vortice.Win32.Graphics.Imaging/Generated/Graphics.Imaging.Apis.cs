@@ -1649,6 +1649,54 @@ public static partial class Apis
 		}
 	}
 
+	public static ref readonly Guid GUID_WICPixelFormat24bppRGBGain
+	{
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		get
+		{
+			ReadOnlySpan<byte> data = [
+				0x24, 0x2B, 0x02, 0xA5,
+				0x09, 0x71,
+				0x3B, 0x44,
+				0x99,
+				0x48,
+				0x25,
+				0xB6,
+				0xED,
+				0x8F,
+				0x39,
+				0xFD
+			];
+
+			Debug.Assert(data.Length == Unsafe.SizeOf<Guid>());
+			return ref Unsafe.As<byte, Guid>(ref MemoryMarshal.GetReference(data));
+		}
+	}
+
+	public static ref readonly Guid GUID_WICPixelFormat32bppBGRGain
+	{
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		get
+		{
+			ReadOnlySpan<byte> data = [
+				0x38, 0x67, 0x7D, 0x83,
+				0x8A, 0x20,
+				0xE0, 0x43,
+				0x89,
+				0x95,
+				0x79,
+				0xAB,
+				0x74,
+				0x40,
+				0x74,
+				0x02
+			];
+
+			Debug.Assert(data.Length == Unsafe.SizeOf<Guid>());
+			return ref Unsafe.As<byte, Guid>(ref MemoryMarshal.GetReference(data));
+		}
+	}
+
 	public static ref readonly Guid GUID_WICPixelFormat16bppBGR555
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -4669,6 +4717,30 @@ public static partial class Apis
 		}
 	}
 
+	public static ref readonly Guid GUID_MetadataFormatGainMap
+	{
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		get
+		{
+			ReadOnlySpan<byte> data = [
+				0x38, 0x31, 0x8D, 0x56,
+				0x46, 0xC4,
+				0xC2, 0x4E,
+				0xA7,
+				0xA8,
+				0x59,
+				0xAB,
+				0xB1,
+				0x6D,
+				0x21,
+				0xE3
+			];
+
+			Debug.Assert(data.Length == Unsafe.SizeOf<Guid>());
+			return ref Unsafe.As<byte, Guid>(ref MemoryMarshal.GetReference(data));
+		}
+	}
+
 	public static ref readonly Guid CLSID_WICUnknownMetadataReader
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -6733,6 +6805,54 @@ public static partial class Apis
 		}
 	}
 
+	public static ref readonly Guid CLSID_WICGainMapMetadataReader
+	{
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		get
+		{
+			ReadOnlySpan<byte> data = [
+				0xAF, 0x2D, 0xC3, 0x3A,
+				0xB9, 0x27,
+				0xF5, 0x4A,
+				0xB0,
+				0xAB,
+				0xD1,
+				0x18,
+				0x9D,
+				0xCF,
+				0x34,
+				0xB3
+			];
+
+			Debug.Assert(data.Length == Unsafe.SizeOf<Guid>());
+			return ref Unsafe.As<byte, Guid>(ref MemoryMarshal.GetReference(data));
+		}
+	}
+
+	public static ref readonly Guid CLSID_WICGainMapMetadataWriter
+	{
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		get
+		{
+			ReadOnlySpan<byte> data = [
+				0x68, 0x52, 0x84, 0x6F,
+				0x2E, 0xA9,
+				0x02, 0x4A,
+				0xB0,
+				0x02,
+				0xA6,
+				0x7C,
+				0x36,
+				0x28,
+				0x00,
+				0xB2
+			];
+
+			Debug.Assert(data.Length == Unsafe.SizeOf<Guid>());
+			return ref Unsafe.As<byte, Guid>(ref MemoryMarshal.GetReference(data));
+		}
+	}
+
 	public const AlphaMode D2D1_ALPHA_MODE_UNKNOWN = AlphaMode.Unknown;
 	public const AlphaMode D2D1_ALPHA_MODE_PREMULTIPLIED = AlphaMode.Premultiplied;
 	public const AlphaMode D2D1_ALPHA_MODE_STRAIGHT = AlphaMode.Straight;
@@ -6876,6 +6996,17 @@ public static partial class Apis
 	public const WICComponentSigning WICComponentUnsigned = WICComponentSigning.Unsigned;
 	public const WICComponentSigning WICComponentSafe = WICComponentSigning.Safe;
 	public const WICComponentSigning WICComponentDisabled = WICComponentSigning.Disabled;
+	public const WICBitmapToneMappingMode WICBitmapToneMappingMode_None = WICBitmapToneMappingMode.None;
+	public const WICBitmapToneMappingMode WICBitmapToneMappingMode_Default = WICBitmapToneMappingMode.Default;
+	public const WICBitmapToneMappingMode WICBitmapToneMappingMode_D2D = WICBitmapToneMappingMode.D2D;
+	public const WICBitmapToneMappingMode WICBitmapToneMappingMode_GainMap = WICBitmapToneMappingMode.GainMap;
+	public const WICBitmapChainType WICBitmapChainType_Alternate = WICBitmapChainType.Alternate;
+	public const WICBitmapChainType WICBitmapChainType_Layer = WICBitmapChainType.Layer;
+	public const WICBitmapChainType WICBitmapChainType_Preview = WICBitmapChainType.Preview;
+	public const WICBitmapChainType WICBitmapChainType_Thumbnail = WICBitmapChainType.Thumbnail;
+	public const WICBitmapChainType WICBitmapChainType_AlphaMap = WICBitmapChainType.AlphaMap;
+	public const WICBitmapChainType WICBitmapChainType_DepthMap = WICBitmapChainType.DepthMap;
+	public const WICBitmapChainType WICBitmapChainType_GainMap = WICBitmapChainType.GainMap;
 	public const WICGifLogicalScreenDescriptorProperties WICGifLogicalScreenSignature = WICGifLogicalScreenDescriptorProperties.Signature;
 	public const WICGifLogicalScreenDescriptorProperties WICGifLogicalScreenDescriptorWidth = WICGifLogicalScreenDescriptorProperties.DescriptorWidth;
 	public const WICGifLogicalScreenDescriptorProperties WICGifLogicalScreenDescriptorHeight = WICGifLogicalScreenDescriptorProperties.DescriptorHeight;
@@ -6941,6 +7072,8 @@ public static partial class Apis
 	public const WICPngTimeProperties WICPngTimeMinute = WICPngTimeProperties.Minute;
 	public const WICPngTimeProperties WICPngTimeSecond = WICPngTimeProperties.Second;
 	public const WICHeifProperties WICHeifOrientation = WICHeifProperties.Orientation;
+	public const WICHeifProperties WICHeifLayeredImageCanvasColor = WICHeifProperties.LayeredImageCanvasColor;
+	public const WICHeifProperties WICHeifLayeredImageLayerPositions = WICHeifProperties.LayeredImageLayerPositions;
 	public const WICHeifHdrProperties WICHeifHdrMaximumLuminanceLevel = WICHeifHdrProperties.MaximumLuminanceLevel;
 	public const WICHeifHdrProperties WICHeifHdrMaximumFrameAverageLuminanceLevel = WICHeifHdrProperties.MaximumFrameAverageLuminanceLevel;
 	public const WICHeifHdrProperties WICHeifHdrMinimumMasteringDisplayLuminanceLevel = WICHeifHdrProperties.MinimumMasteringDisplayLuminanceLevel;
@@ -6953,6 +7086,7 @@ public static partial class Apis
 	public const WICJpegXLAnimProperties WICJpegXLAnimFrameTicksPerSecondDenominator = WICJpegXLAnimProperties.FrameTicksPerSecondDenominator;
 	public const WICJpegXLAnimFrameProperties WICJpegXLAnimFrameDurationInTicks = WICJpegXLAnimFrameProperties.DurationInTicks;
 	public const WICJpegXLAnimFrameProperties WICJpegXLAnimFrameName = WICJpegXLAnimFrameProperties.Name;
+	public const WICGainMapProperties WICGainMapMetadata = WICGainMapProperties.Metadata;
 	public const WICSectionAccessLevel WICSectionAccessLevelRead = WICSectionAccessLevel.Read;
 	public const WICSectionAccessLevel WICSectionAccessLevelReadWrite = WICSectionAccessLevel.ReadWrite;
 	public const WICPixelFormatNumericRepresentation WICPixelFormatNumericRepresentationUnspecified = WICPixelFormatNumericRepresentation.Unspecified;
@@ -6994,6 +7128,9 @@ public static partial class Apis
 	public const WICHeifCompressionOption WICHeifCompressionNone = WICHeifCompressionOption.WICHeifCompressionNone;
 	public const WICHeifCompressionOption WICHeifCompressionHEVC = WICHeifCompressionOption.WICHeifCompressionHEVC;
 	public const WICHeifCompressionOption WICHeifCompressionAV1 = WICHeifCompressionOption.WICHeifCompressionAV1;
+	public const WICHeifCompressionOption WICHeifCompressionJpegXL = WICHeifCompressionOption.WICHeifCompressionJpegXL;
+	public const WICHeifCompressionOption WICHeifCompressionBrotli = WICHeifCompressionOption.WICHeifCompressionBrotli;
+	public const WICHeifCompressionOption WICHeifCompressionDeflate = WICHeifCompressionOption.WICHeifCompressionDeflate;
 	public const WICNamedWhitePoint WICWhitePointDefault = WICNamedWhitePoint.Default;
 	public const WICNamedWhitePoint WICWhitePointDaylight = WICNamedWhitePoint.Daylight;
 	public const WICNamedWhitePoint WICWhitePointCloudy = WICNamedWhitePoint.Cloudy;

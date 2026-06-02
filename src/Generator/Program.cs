@@ -137,6 +137,7 @@ public static class Program
         { "Foundation.POINT", "System.Drawing.Point" },
         { "Foundation.POINTL", "System.Drawing.Point" },
         { "Foundation.SIZE", "System.Drawing.Size" },
+        { "System.Services.SC_HANDLE", "IntPtr" },
     };
 
     private static readonly Dictionary<string, string> s_partRenames = new()
@@ -1212,9 +1213,11 @@ public static class Program
         { "D3D11On12CreateDevice::Flags", "Graphics.Direct3D11.D3D11_CREATE_DEVICE_FLAG" },
     };
 
-    private static readonly HashSet<string> s_visitedEnums = new();
-    private static readonly HashSet<string> s_visitedStructs = new();
-    private static readonly Dictionary<string, Dictionary<string, List<ApiType>>> s_visitedComTypes = new();
+    private static readonly HashSet<string> s_visitedEnums = [];
+    private static readonly HashSet<string> s_visitedStructs = [];
+
+    private static readonly HashSet<ApiType> s_visitedComTypes = [];
+    private static readonly Dictionary<string, Dictionary<string, List<ApiType>>> s_visitedComTypeMethods = [];
     private static readonly HashSet<string> s_enumConstants = [];
 
     private static bool s_generateDocs = true;
@@ -1383,16 +1386,14 @@ public static class Program
             subFolderName += splits[i];
         }
 
-        string fileName = subFolderName;
-        string ns = string.Empty;
-        if (string.IsNullOrWhiteSpace(fileName) == true)
+        string ns;
+        if (string.IsNullOrWhiteSpace(subFolderName) == true)
         {
-            fileName = splits[0];
             ns = folderRoot;
         }
         else
         {
-            ns = $"{folderRoot}.{fileName}";
+            ns = $"{folderRoot}.{subFolderName}";
         }
 
         if (docFile == "json" || jsonFile == "Graphics.Direct3D.Dxc.json")
@@ -1692,7 +1693,7 @@ public static class Program
 
         // Structs
         needNewLine = false;
-        foreach (ApiType structType in api.Types.Where(item => item.Kind.ToLowerInvariant() == "struct"))
+        foreach (ApiType structType in api.Types.Where(item => item.Kind.Equals("struct", StringComparison.InvariantCultureIgnoreCase)))
         {
             if (structType.Name.StartsWith("D3DX11") ||
                 structType.Name.StartsWith("CD3D11") ||
@@ -1726,12 +1727,6 @@ public static class Program
             }
 
             // Generate methods
-            // TODO: FIX broken VTable ID3D12Heap, ID2D1Factory2
-            if (comType.Name == "ID3D12Pageable")
-            {
-
-            }
-
             Dictionary<string, List<ApiType>> methodsToGenerate = [];
 
             // We must generate from lower to upper
@@ -1751,7 +1746,7 @@ public static class Program
                 }
                 else
                 {
-                    Dictionary<string, List<ApiType>> knownMethods = s_visitedComTypes.First(item => item.Key == fullTypeName).Value;
+                    Dictionary<string, List<ApiType>> knownMethods = s_visitedComTypeMethods.First(item => item.Key == fullTypeName).Value;
 
                     foreach (KeyValuePair<string, List<ApiType>> knownMethod in knownMethods)
                     {
@@ -1801,6 +1796,7 @@ public static class Program
             }
 
             GenerateComType(folder, apiName, docFileName, api, comType, methodsToGenerate);
+            s_visitedComTypes.Add(comType);
         }
     }
 
@@ -2485,7 +2481,7 @@ public static class Program
             apiName,
             docFileName,
             $"Vortice.Win32.{apiName}",
-            namespaces.ToArray()
+            [.. namespaces]
             );
 
         if (s_generateDocs == true &&
@@ -2531,10 +2527,20 @@ public static class Program
             writer.WriteLine($"public void** lpVtbl;");
             writer.WriteLine();
 
-            int vtblIndex = 0;
+            comType.VTableIndex = 0;
 
             bool generateIUnknown = false;
             var iterateType = comType;
+
+            if (csTypeName == "IWICImagingFactory")
+            {
+
+            }
+
+            if (csTypeName == "IWICImagingFactory2")
+            {
+
+            }
 
             while (iterateType != null)
             {
@@ -2542,15 +2548,29 @@ public static class Program
                     break;
 
                 generateIUnknown = iterateType.Interface.Name == "IUnknown";
-                iterateType = api.Types.FirstOrDefault(item => item.Name == iterateType.Interface.Name);
+                if (iterateType.Interface.Name != "IUnknown")
+                {
+                    string interfaceRootType = iterateType.Interface.Name;
+                    iterateType = api.Types.FirstOrDefault(item => item.Name == iterateType.Interface.Name);
+                    if (iterateType is null)
+                    {
+                        iterateType = s_visitedComTypes.FirstOrDefault(item => item.Name == interfaceRootType);
+                        if (iterateType is not null)
+                        {
+                           // comType.VTableIndex = iterateType.VTableIndex;
+                        }
+                    }
+                }
+                else
+                {
+                    iterateType = default;
+                }
             }
 
             if (!generateIUnknown)
             {
-                if (csTypeName == "ID2D1GeometrySink" ||
-                    csTypeName == "IWICStream" ||
-                    csTypeName == "IWICPersistStream" ||
-                    csTypeName == "IWICImagingFactory2")
+                if (csTypeName == "IWICStream"
+                    || csTypeName == "IWICPersistStream")
                 {
                     generateIUnknown = true;
                 }
@@ -2588,14 +2608,14 @@ public static class Program
                     writer.WriteLine($"return ((delegate* unmanaged[MemberFunction]<{comType.Name}*, uint>)(lpVtbl[2]))(({comType.Name}*)Unsafe.AsPointer(ref this));");
                 }
                 writer.WriteLine();
-                vtblIndex = 3;
+                comType.VTableIndex += 3;
             }
 
             // Offset some hacks
             if (csTypeName == "IWICStream")
-                vtblIndex = 14;
+                comType.VTableIndex = 14;
             if (csTypeName == "IWICPersistStream")
-                vtblIndex = 8;
+                comType.VTableIndex = 8;
 
             bool needNewLine = false;
             List<Tuple<int, string>> interfaceMethods = [];
@@ -2772,7 +2792,7 @@ public static class Program
                     }
 
                     writer.WriteLine("[MethodImpl(MethodImplOptions.AggressiveInlining)]");
-                    writer.WriteLine($"[VtblIndex({vtblIndex})]");
+                    writer.WriteLine($"[VtblIndex({comType.VTableIndex})]");
 
                     string methodSuffix = string.Empty;
                     if (method.Name == "GetType")
@@ -2792,7 +2812,7 @@ public static class Program
                             {
                                 writer.WriteLine($"{returnType} result;");
                                 writer.Write("return ");
-                                writer.WriteLine($"*((delegate* unmanaged[MemberFunction]<{comType.Name}*, {argumentTypesString}>)(lpVtbl[{vtblIndex}]))(({comType.Name}*)Unsafe.AsPointer(ref this), &result{argumentNamesString});");
+                                writer.WriteLine($"*((delegate* unmanaged[MemberFunction]<{comType.Name}*, {argumentTypesString}>)(lpVtbl[{comType.VTableIndex}]))(({comType.Name}*)Unsafe.AsPointer(ref this), &result{argumentNamesString});");
                             }
                             else
                             {
@@ -2810,7 +2830,7 @@ public static class Program
                                 writer.Write($"(({returnCastType})(");
                             }
 
-                            writer.Write($"((delegate* unmanaged[MemberFunction]<{comType.Name}*, {argumentTypesString}>)(lpVtbl[{vtblIndex}]))(({comType.Name}*)Unsafe.AsPointer(ref this){argumentNamesString})");
+                            writer.Write($"((delegate* unmanaged[MemberFunction]<{comType.Name}*, {argumentTypesString}>)(lpVtbl[{comType.VTableIndex}]))(({comType.Name}*)Unsafe.AsPointer(ref this){argumentNamesString})");
 
                             if (!string.IsNullOrEmpty(returnCastType))
                             {
@@ -2826,11 +2846,11 @@ public static class Program
                     if (needToAddInterfaceMethod)
                     {
                         string interfaceMethodDecl = $"{returnType} {method.Name}({argumentsString})";
-                        interfaceMethods.Add(Tuple.Create(vtblIndex, interfaceMethodDecl));
+                        interfaceMethods.Add(Tuple.Create(comType.VTableIndex, interfaceMethodDecl));
                     }
 
                     needNewLine = true;
-                    vtblIndex++;
+                    comType.VTableIndex++;
                 }
             }
 
@@ -2851,7 +2871,7 @@ public static class Program
             needNewLine = false;
             using (writer.PushBlock($"public interface Interface {baseInterfaceDecl}"))
             {
-                foreach (var item in interfaceMethods)
+                foreach (Tuple<int, string> item in interfaceMethods)
                 {
                     if (needNewLine)
                     {
@@ -2866,7 +2886,7 @@ public static class Program
         }
 
         writer.WriteLine();
-        s_visitedComTypes.Add($"{writer.Api}.{comType.Name}", methodsToGenerate);
+        s_visitedComTypeMethods.Add($"{writer.Api}.{comType.Name}", methodsToGenerate);
     }
 
     private static void GetParameterSignature(
@@ -3402,7 +3422,7 @@ public static class Program
             string fullTypeName = $"{lookupApiName}.{dataType.Name}";
 
             if (IsKnownComType(fullTypeName) ||
-                s_visitedComTypes.ContainsKey(fullTypeName) ||
+                s_visitedComTypeMethods.ContainsKey(fullTypeName) ||
                 api.Types.Any(item => item.Name == dataType.Name && item.Kind.ToLowerInvariant() == "com"))
             {
                 asPointer = true;

@@ -79,6 +79,28 @@
 			}
 		]
 	}
+	,{
+		"Name":"IWICImagingFactory3"
+		,"Architectures":[]
+		,"Platform":null
+		,"Kind":"Com"
+		,"Guid":"489b3d8b-624a-4258-b678-7eece70f299d"
+		,"Interface":{"Kind":"ApiRef","Name":"IWICImagingFactory2","TargetKind":"Com","Api":"Graphics.Imaging.D2D","Parents":[]}
+		,"Methods":[
+			{
+				"Name":"CreateBitmapToneMapper"
+				,"SetLastError":false
+				,"ReturnType":{"Kind":"ApiRef","Name":"HRESULT","TargetKind":"Default","Api":"Foundation","Parents":[]}
+				,"ReturnAttrs":[]
+				,"Architectures":[]
+				,"Platform":null
+				,"Attrs":[]
+				,"Params":[
+					{"Name":"ppToneMapper","Type":{"Kind":"PointerTo","Child":{"Kind":"ApiRef","Name":"IWICBitmapToneMapper","TargetKind":"Com","Api":"Graphics.Imaging","Parents":[]}},"Attrs":["Out"]}
+				]
+			}
+		]
+	}
 ]
 
 ,"Functions":[

@@ -633,6 +633,10 @@ public static partial class Apis
 
 	public const uint D3D12_RAYTRACING_MAX_SHADER_RECORD_STRIDE = 4096;
 
+	public const uint D3D12_RAYTRACING_OPACITY_MICROMAP_ARRAY_BYTE_ALIGNMENT = 128;
+
+	public const uint D3D12_RAYTRACING_OPACITY_MICROMAP_OC1_MAX_SUBDIVISION_LEVEL = 12;
+
 	public const uint D3D12_RAYTRACING_SHADER_RECORD_BYTE_ALIGNMENT = 32;
 
 	public const uint D3D12_RAYTRACING_SHADER_TABLE_BYTE_ALIGNMENT = 64;
@@ -697,7 +701,7 @@ public static partial class Apis
 
 	public const uint D3D12_RS_SET_SHADING_RATE_COMBINER_COUNT = 2;
 
-	public const uint D3D12_SDK_VERSION = 616;
+	public const uint D3D12_SDK_VERSION = 618;
 
 	public const uint D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES = 32;
 
@@ -803,9 +807,9 @@ public static partial class Apis
 
 	public const uint D3D12_TEXTURE_DATA_PLACEMENT_ALIGNMENT = 512;
 
-	public const uint D3D12_TIGHT_ALIGNMENT_MIN_COMMITTED_RESOURCE_ALIGNEMNT = 4096;
+	public const uint D3D12_TIGHT_ALIGNMENT_MIN_COMMITTED_RESOURCE_ALIGNMENT = 4096;
 
-	public const uint D3D12_TIGHT_ALIGNMENT_MIN_PLACED_RESOURCE_ALIGNEMNT = 8;
+	public const uint D3D12_TIGHT_ALIGNMENT_MIN_PLACED_RESOURCE_ALIGNMENT = 8;
 
 	public const uint D3D12_TILED_RESOURCE_TILE_SIZE_IN_BYTES = 65536;
 
@@ -1063,6 +1067,30 @@ public static partial class Apis
 		}
 	}
 
+	public static ref readonly Guid CLSID_D3D12StateObjectFactory
+	{
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		get
+		{
+			ReadOnlySpan<byte> data = [
+				0xF3, 0xC9, 0xE1, 0x54,
+				0x03, 0x13,
+				0x12, 0x41,
+				0xBF,
+				0x8E,
+				0x7B,
+				0xF2,
+				0xBB,
+				0x60,
+				0x6A,
+				0x73
+			];
+
+			Debug.Assert(data.Length == Unsafe.SizeOf<Guid>());
+			return ref Unsafe.As<byte, Guid>(ref MemoryMarshal.GetReference(data));
+		}
+	}
+
 	public const uint D3D12_SHADING_RATE_X_AXIS_SHIFT = 2;
 
 	public const uint D3D12_SHADING_RATE_VALID_MASK = 3;
@@ -1245,6 +1273,7 @@ public static partial class Apis
 	public const CommandListType D3D12_COMMAND_LIST_TYPE_NONE = CommandListType.None;
 	public const CommandQueueFlags D3D12_COMMAND_QUEUE_FLAG_NONE = CommandQueueFlags.None;
 	public const CommandQueueFlags D3D12_COMMAND_QUEUE_FLAG_DISABLE_GPU_TIMEOUT = CommandQueueFlags.DisableGpuTimeout;
+	public const CommandQueueFlags D3D12_COMMAND_QUEUE_FLAG_ALLOW_DYNAMIC_PRIORITY = CommandQueueFlags.AllowDynamicPriority;
 	public const CommandQueuePriority D3D12_COMMAND_QUEUE_PRIORITY_NORMAL = CommandQueuePriority.Normal;
 	public const CommandQueuePriority D3D12_COMMAND_QUEUE_PRIORITY_HIGH = CommandQueuePriority.High;
 	public const CommandQueuePriority D3D12_COMMAND_QUEUE_PRIORITY_GLOBAL_REALTIME = CommandQueuePriority.GlobalRealtime;
@@ -1339,6 +1368,9 @@ public static partial class Apis
 	public const PipelineStateFlags D3D12_PIPELINE_STATE_FLAG_TOOL_DEBUG = PipelineStateFlags.ToolDebug;
 	public const PipelineStateFlags D3D12_PIPELINE_STATE_FLAG_DYNAMIC_DEPTH_BIAS = PipelineStateFlags.DynamicDepthBias;
 	public const PipelineStateFlags D3D12_PIPELINE_STATE_FLAG_DYNAMIC_INDEX_BUFFER_STRIP_CUT = PipelineStateFlags.DynamicIndexBufferStripCut;
+	public const RootSignatureVersion D3D_ROOT_SIGNATURE_VERSION_1_0 = RootSignatureVersion.V1_0;
+	public const RootSignatureVersion D3D_ROOT_SIGNATURE_VERSION_1_1 = RootSignatureVersion.V1_1;
+	public const RootSignatureVersion D3D_ROOT_SIGNATURE_VERSION_1_2 = RootSignatureVersion.V1_2;
 	public const PipelineStateSubObjectType D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_ROOT_SIGNATURE = PipelineStateSubObjectType.RootSignature;
 	public const PipelineStateSubObjectType D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_VS = PipelineStateSubObjectType.VS;
 	public const PipelineStateSubObjectType D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_PS = PipelineStateSubObjectType.PS;
@@ -1367,6 +1399,7 @@ public static partial class Apis
 	public const PipelineStateSubObjectType D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_DEPTH_STENCIL2 = PipelineStateSubObjectType.DepthStencil2;
 	public const PipelineStateSubObjectType D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_RASTERIZER1 = PipelineStateSubObjectType.Rasterizer1;
 	public const PipelineStateSubObjectType D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_RASTERIZER2 = PipelineStateSubObjectType.Rasterizer2;
+	public const PipelineStateSubObjectType D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_SERIALIZED_ROOT_SIGNATURE = PipelineStateSubObjectType.SerializedRootSignature;
 	public const PipelineStateSubObjectType D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_MAX_VALID = PipelineStateSubObjectType.MaxValid;
 	public const Feature D3D12_FEATURE_D3D12_OPTIONS = Feature.Options;
 	public const Feature D3D12_FEATURE_ARCHITECTURE = Feature.Architecture;
@@ -1412,8 +1445,10 @@ public static partial class Apis
 	public const Feature D3D12_FEATURE_PLACED_RESOURCE_SUPPORT_INFO = Feature.PlacedResourceSupportInfo;
 	public const Feature D3D12_FEATURE_HARDWARE_COPY = Feature.HardwareCopy;
 	public const Feature D3D12_FEATURE_D3D12_OPTIONS21 = Feature.Options21;
+	public const Feature D3D12_FEATURE_D3D12_TIGHT_ALIGNMENT = Feature.TightAlignment;
 	public const Feature D3D12_FEATURE_APPLICATION_SPECIFIC_DRIVER_STATE = Feature.ApplicationSpecificDriverState;
 	public const Feature D3D12_FEATURE_BYTECODE_BYPASS_HASH_SUPPORTED = Feature.BytecodeBypassHashSupported;
+	public const Feature D3D12_FEATURE_SHADER_CACHE_ABI_SUPPORT = Feature.ShaderCacheAbiSupport;
 	public const ShaderMinPrecisionSupport D3D12_SHADER_MIN_PRECISION_SUPPORT_NONE = ShaderMinPrecisionSupport.None;
 	public const ShaderMinPrecisionSupport D3D12_SHADER_MIN_PRECISION_SUPPORT_10_BIT = ShaderMinPrecisionSupport.P10Bit;
 	public const ShaderMinPrecisionSupport D3D12_SHADER_MIN_PRECISION_SUPPORT_16_BIT = ShaderMinPrecisionSupport.P16Bit;
@@ -1472,6 +1507,7 @@ public static partial class Apis
 	public const FormatSupport2 D3D12_FORMAT_SUPPORT2_TILED = FormatSupport2.Tiled;
 	public const FormatSupport2 D3D12_FORMAT_SUPPORT2_MULTIPLANE_OVERLAY = FormatSupport2.MultiplaneOverlay;
 	public const FormatSupport2 D3D12_FORMAT_SUPPORT2_SAMPLER_FEEDBACK = FormatSupport2.SamplerFeedback;
+	public const FormatSupport2 D3D12_FORMAT_SUPPORT2_DISPLAYABLE = FormatSupport2.Displayable;
 	public const MultisampleQualityLevelFlags D3D12_MULTISAMPLE_QUALITY_LEVELS_FLAG_NONE = MultisampleQualityLevelFlags.None;
 	public const MultisampleQualityLevelFlags D3D12_MULTISAMPLE_QUALITY_LEVELS_FLAG_TILED_RESOURCE = MultisampleQualityLevelFlags.TiledResource;
 	public const CrossNodeSharingTier D3D12_CROSS_NODE_SHARING_TIER_NOT_SUPPORTED = CrossNodeSharingTier.NotSupported;
@@ -1490,9 +1526,6 @@ public static partial class Apis
 	public const ViewInstancingTier D3D12_VIEW_INSTANCING_TIER_3 = ViewInstancingTier.Tier3;
 	public const WorkGraphsTier D3D12_WORK_GRAPHS_TIER_NOT_SUPPORTED = WorkGraphsTier.NotSupported;
 	public const WorkGraphsTier D3D12_WORK_GRAPHS_TIER_1_0 = WorkGraphsTier.Tier1_0;
-	public const RootSignatureVersion D3D_ROOT_SIGNATURE_VERSION_1_0 = RootSignatureVersion.V1_0;
-	public const RootSignatureVersion D3D_ROOT_SIGNATURE_VERSION_1_1 = RootSignatureVersion.V1_1;
-	public const RootSignatureVersion D3D_ROOT_SIGNATURE_VERSION_1_2 = RootSignatureVersion.V1_2;
 	public const ShaderModel D3D_SHADER_MODEL_NONE = ShaderModel.None;
 	public const ShaderModel D3D_SHADER_MODEL_5_1 = ShaderModel.SM_5_1;
 	public const ShaderModel D3D_SHADER_MODEL_6_0 = ShaderModel.SM_6_0;
@@ -1551,6 +1584,8 @@ public static partial class Apis
 	public const RecreateAtTier D3D12_RECREATE_AT_TIER_1 = RecreateAtTier.Tier1;
 	public const ExecuteIndirectTier D3D12_EXECUTE_INDIRECT_TIER_1_0 = ExecuteIndirectTier.Tier1_0;
 	public const ExecuteIndirectTier D3D12_EXECUTE_INDIRECT_TIER_1_1 = ExecuteIndirectTier.Tier1_1;
+	public const TightAlignmentTier D3D12_TIGHT_ALIGNMENT_TIER_NOT_SUPPORTED = TightAlignmentTier.NotSupported;
+	public const TightAlignmentTier D3D12_TIGHT_ALIGNMENT_TIER_1 = TightAlignmentTier.Tier1;
 	public const HeapType D3D12_HEAP_TYPE_DEFAULT = HeapType.Default;
 	public const HeapType D3D12_HEAP_TYPE_UPLOAD = HeapType.Upload;
 	public const HeapType D3D12_HEAP_TYPE_READBACK = HeapType.Readback;
@@ -1599,6 +1634,7 @@ public static partial class Apis
 	public const ResourceFlags D3D12_RESOURCE_FLAG_VIDEO_DECODE_REFERENCE_ONLY = ResourceFlags.VideoDecodeReferenceOnly;
 	public const ResourceFlags D3D12_RESOURCE_FLAG_VIDEO_ENCODE_REFERENCE_ONLY = ResourceFlags.VideoEncodeReferenceOnly;
 	public const ResourceFlags D3D12_RESOURCE_FLAG_RAYTRACING_ACCELERATION_STRUCTURE = ResourceFlags.RaytracingAccelerationStructure;
+	public const ResourceFlags D3D12_RESOURCE_FLAG_USE_TIGHT_ALIGNMENT = ResourceFlags.UseTightAlignment;
 	public const TileRangeFlags D3D12_TILE_RANGE_FLAG_NONE = TileRangeFlags.None;
 	public const TileRangeFlags D3D12_TILE_RANGE_FLAG_NULL = TileRangeFlags.Null;
 	public const TileRangeFlags D3D12_TILE_RANGE_FLAG_SKIP = TileRangeFlags.Skip;
@@ -1853,6 +1889,26 @@ public static partial class Apis
 	public const WriteBufferImmediateMode D3D12_WRITEBUFFERIMMEDIATE_MODE_DEFAULT = WriteBufferImmediateMode.Default;
 	public const WriteBufferImmediateMode D3D12_WRITEBUFFERIMMEDIATE_MODE_MARKER_IN = WriteBufferImmediateMode.MarkerIn;
 	public const WriteBufferImmediateMode D3D12_WRITEBUFFERIMMEDIATE_MODE_MARKER_OUT = WriteBufferImmediateMode.MarkerOut;
+	public const CommandQueueProcessPriority D3D12_COMMAND_QUEUE_PROCESS_PRIORITY_NORMAL = CommandQueueProcessPriority.Normal;
+	public const CommandQueueProcessPriority D3D12_COMMAND_QUEUE_PROCESS_PRIORITY_HIGH = CommandQueueProcessPriority.High;
+	public const CommandQueueGlobalPriority D3D12_COMMAND_QUEUE_GLOBAL_PRIORITY_IDLE = CommandQueueGlobalPriority.Idle;
+	public const CommandQueueGlobalPriority D3D12_COMMAND_QUEUE_GLOBAL_PRIORITY_DEFAULT = CommandQueueGlobalPriority.Default;
+	public const CommandQueueGlobalPriority D3D12_COMMAND_QUEUE_GLOBAL_PRIORITY_NORMAL_0 = CommandQueueGlobalPriority.Normal0;
+	public const CommandQueueGlobalPriority D3D12_COMMAND_QUEUE_GLOBAL_PRIORITY_SOFT_REALTIME_0 = CommandQueueGlobalPriority.SoftRealtime0;
+	public const CommandQueueGlobalPriority D3D12_COMMAND_QUEUE_GLOBAL_PRIORITY_SOFT_REALTIME_1 = CommandQueueGlobalPriority.SoftRealtime1;
+	public const CommandQueueGlobalPriority D3D12_COMMAND_QUEUE_GLOBAL_PRIORITY_SOFT_REALTIME_2 = CommandQueueGlobalPriority.SoftRealtime2;
+	public const CommandQueueGlobalPriority D3D12_COMMAND_QUEUE_GLOBAL_PRIORITY_SOFT_REALTIME_3 = CommandQueueGlobalPriority.SoftRealtime3;
+	public const CommandQueueGlobalPriority D3D12_COMMAND_QUEUE_GLOBAL_PRIORITY_SOFT_REALTIME_4 = CommandQueueGlobalPriority.SoftRealtime4;
+	public const CommandQueueGlobalPriority D3D12_COMMAND_QUEUE_GLOBAL_PRIORITY_SOFT_REALTIME_5 = CommandQueueGlobalPriority.SoftRealtime5;
+	public const CommandQueueGlobalPriority D3D12_COMMAND_QUEUE_GLOBAL_PRIORITY_SOFT_REALTIME_6 = CommandQueueGlobalPriority.SoftRealtime6;
+	public const CommandQueueGlobalPriority D3D12_COMMAND_QUEUE_GLOBAL_PRIORITY_SOFT_REALTIME_7 = CommandQueueGlobalPriority.SoftRealtime7;
+	public const CommandQueueGlobalPriority D3D12_COMMAND_QUEUE_GLOBAL_PRIORITY_SOFT_REALTIME_8 = CommandQueueGlobalPriority.SoftRealtime8;
+	public const CommandQueueGlobalPriority D3D12_COMMAND_QUEUE_GLOBAL_PRIORITY_SOFT_REALTIME_9 = CommandQueueGlobalPriority.SoftRealtime9;
+	public const CommandQueueGlobalPriority D3D12_COMMAND_QUEUE_GLOBAL_PRIORITY_SOFT_REALTIME_10 = CommandQueueGlobalPriority.SoftRealtime10;
+	public const CommandQueueGlobalPriority D3D12_COMMAND_QUEUE_GLOBAL_PRIORITY_SOFT_REALTIME_11 = CommandQueueGlobalPriority.SoftRealtime11;
+	public const CommandQueueGlobalPriority D3D12_COMMAND_QUEUE_GLOBAL_PRIORITY_SOFT_REALTIME_12 = CommandQueueGlobalPriority.SoftRealtime12;
+	public const CommandQueueGlobalPriority D3D12_COMMAND_QUEUE_GLOBAL_PRIORITY_SOFT_REALTIME_13 = CommandQueueGlobalPriority.SoftRealtime13;
+	public const CommandQueueGlobalPriority D3D12_COMMAND_QUEUE_GLOBAL_PRIORITY_HARD_REALTIME = CommandQueueGlobalPriority.HardRealtime;
 	public const MultipleFenceWaitFlags D3D12_MULTIPLE_FENCE_WAIT_FLAG_NONE = MultipleFenceWaitFlags.None;
 	public const MultipleFenceWaitFlags D3D12_MULTIPLE_FENCE_WAIT_FLAG_ANY = MultipleFenceWaitFlags.Any;
 	public const MultipleFenceWaitFlags D3D12_MULTIPLE_FENCE_WAIT_FLAG_ALL = MultipleFenceWaitFlags.All;
@@ -1930,6 +1986,10 @@ public static partial class Apis
 	public const StateSubObjectType D3D12_STATE_SUBOBJECT_TYPE_VIEW_INSTANCING = StateSubObjectType.ViewInstancing;
 	public const StateSubObjectType D3D12_STATE_SUBOBJECT_TYPE_GENERIC_PROGRAM = StateSubObjectType.GenericProgram;
 	public const StateSubObjectType D3D12_STATE_SUBOBJECT_TYPE_DEPTH_STENCIL2 = StateSubObjectType.DepthStencil2;
+	public const StateSubObjectType D3D12_STATE_SUBOBJECT_TYPE_GLOBAL_SERIALIZED_ROOT_SIGNATURE = StateSubObjectType.GlobalSerializedRootSignature;
+	public const StateSubObjectType D3D12_STATE_SUBOBJECT_TYPE_LOCAL_SERIALIZED_ROOT_SIGNATURE = StateSubObjectType.LocalSerializedRootSignature;
+	public const StateSubObjectType D3D12_STATE_SUBOBJECT_TYPE_COMPILER_EXISITING_COLLECTION = StateSubObjectType.CompilerExisitingCollection;
+	public const StateSubObjectType D3D12_STATE_SUBOBJECT_TYPE_EXISTING_COLLECTION_BY_KEY = StateSubObjectType.ExistingCollectionByKey;
 	public const StateSubObjectType D3D12_STATE_SUBOBJECT_TYPE_MAX_VALID = StateSubObjectType.MaxValid;
 	public const StateObjectFlags D3D12_STATE_OBJECT_FLAG_NONE = StateObjectFlags.None;
 	public const StateObjectFlags D3D12_STATE_OBJECT_FLAG_ALLOW_LOCAL_DEPENDENCIES_ON_EXTERNAL_DEFINITIONS = StateObjectFlags.AllowLocalDependenciesOnExternalDefinitions;
@@ -2026,6 +2086,60 @@ public static partial class Apis
 	public const RayFlags D3D12_RAY_FLAG_FORCE_OMM_2_STATE = RayFlags.ForceOmm2State;
 	public const HitKind D3D12_HIT_KIND_TRIANGLE_FRONT_FACE = HitKind.TriangleFrontFace;
 	public const HitKind D3D12_HIT_KIND_TRIANGLE_BACK_FACE = HitKind.TriangleBackFace;
+	public const MarkerApi D3D12_MARKER_API_SETMARKER = MarkerApi.SetMarker;
+	public const MarkerApi D3D12_MARKER_API_BEGINEVENT = MarkerApi.BeginEvent;
+	public const MarkerApi D3D12_MARKER_API_ENDEVENT = MarkerApi.EndEvent;
+	public const MarkerApi D3D12_MARKER_API_DRAWINSTANCED = MarkerApi.DrawInstanced;
+	public const MarkerApi D3D12_MARKER_API_DRAWINDEXEDINSTANCED = MarkerApi.DrawIndexedInstanced;
+	public const MarkerApi D3D12_MARKER_API_EXECUTEINDIRECT = MarkerApi.ExecuteIndirect;
+	public const MarkerApi D3D12_MARKER_API_DISPATCH = MarkerApi.Dispatch;
+	public const MarkerApi D3D12_MARKER_API_COPYBUFFERREGION = MarkerApi.CopyBufferRegion;
+	public const MarkerApi D3D12_MARKER_API_COPYTEXTUREREGION = MarkerApi.CopyTextureRegion;
+	public const MarkerApi D3D12_MARKER_API_COPYRESOURCE = MarkerApi.CopyResource;
+	public const MarkerApi D3D12_MARKER_API_COPYTILES = MarkerApi.CopyTiles;
+	public const MarkerApi D3D12_MARKER_API_RESOLVESUBRESOURCE = MarkerApi.ResolveSubresource;
+	public const MarkerApi D3D12_MARKER_API_CLEARRENDERTARGETVIEW = MarkerApi.ClearRenderTargetView;
+	public const MarkerApi D3D12_MARKER_API_CLEARUNORDEREDACCESSVIEW = MarkerApi.ClearUnorderedAccessView;
+	public const MarkerApi D3D12_MARKER_API_CLEARDEPTHSTENCILVIEW = MarkerApi.ClearDepthStencilView;
+	public const MarkerApi D3D12_MARKER_API_RESOURCEBARRIER = MarkerApi.ResourceBarrier;
+	public const MarkerApi D3D12_MARKER_API_EXECUTEBUNDLE = MarkerApi.ExecuteBundle;
+	public const MarkerApi D3D12_MARKER_API_PRESENT = MarkerApi.Present;
+	public const MarkerApi D3D12_MARKER_API_RESOLVEQUERYDATA = MarkerApi.ResolveQueryData;
+	public const MarkerApi D3D12_MARKER_API_BEGINSUBMISSION = MarkerApi.BeginSubmission;
+	public const MarkerApi D3D12_MARKER_API_ENDSUBMISSION = MarkerApi.EndSubmission;
+	public const MarkerApi D3D12_MARKER_API_DECODEFRAME = MarkerApi.DecodeFrame;
+	public const MarkerApi D3D12_MARKER_API_PROCESSFRAMES = MarkerApi.ProcessFrames;
+	public const MarkerApi D3D12_MARKER_API_ATOMICCOPYBUFFERUINT = MarkerApi.AtomicCopyBufferUInt;
+	public const MarkerApi D3D12_MARKER_API_ATOMICCOPYBUFFERUINT64 = MarkerApi.AtomicCopyBufferUInt64;
+	public const MarkerApi D3D12_MARKER_API_RESOLVESUBRESOURCEREGION = MarkerApi.ResolveSubresourceRegion;
+	public const MarkerApi D3D12_MARKER_API_WRITEBUFFERIMMEDIATE = MarkerApi.WriteBufferImmediate;
+	public const MarkerApi D3D12_MARKER_API_DECODEFRAME1 = MarkerApi.DecodeFrame1;
+	public const MarkerApi D3D12_MARKER_API_SETPROTECTEDRESOURCESESSION = MarkerApi.SetProtectedResourceSession;
+	public const MarkerApi D3D12_MARKER_API_DECODEFRAME2 = MarkerApi.DecodeFrame2;
+	public const MarkerApi D3D12_MARKER_API_PROCESSFRAMES1 = MarkerApi.ProcessFrames1;
+	public const MarkerApi D3D12_MARKER_API_BUILDRAYTRACINGACCELERATIONSTRUCTURE = MarkerApi.BuildRaytracingAccelerationStructure;
+	public const MarkerApi D3D12_MARKER_API_EMITRAYTRACINGACCELERATIONSTRUCTUREPOSTBUILDINFO = MarkerApi.EmitRaytracingAccelerationStructurePostBuildInfo;
+	public const MarkerApi D3D12_MARKER_API_COPYRAYTRACINGACCELERATIONSTRUCTURE = MarkerApi.CopyRaytracingAccelerationStructure;
+	public const MarkerApi D3D12_MARKER_API_DISPATCHRAYS = MarkerApi.DispatchRays;
+	public const MarkerApi D3D12_MARKER_API_INITIALIZEMETACOMMAND = MarkerApi.InitializeMetaCommand;
+	public const MarkerApi D3D12_MARKER_API_EXECUTEMETACOMMAND = MarkerApi.ExecuteMetaCommand;
+	public const MarkerApi D3D12_MARKER_API_ESTIMATEMOTION = MarkerApi.EstimateMotion;
+	public const MarkerApi D3D12_MARKER_API_RESOLVEMOTIONVECTORHEAP = MarkerApi.ResolveMotionVectorHeap;
+	public const MarkerApi D3D12_MARKER_API_SETPIPELINESTATE1 = MarkerApi.SetPipelineState1;
+	public const MarkerApi D3D12_MARKER_API_INITIALIZEEXTENSIONCOMMAND = MarkerApi.InitializeExtensionCommand;
+	public const MarkerApi D3D12_MARKER_API_EXECUTEEXTENSIONCOMMAND = MarkerApi.ExecuteExtensionCommand;
+	public const MarkerApi D3D12_MARKER_API_DISPATCHMESH = MarkerApi.DispatchMesh;
+	public const MarkerApi D3D12_MARKER_API_ENCODEFRAME = MarkerApi.EncodeFrame;
+	public const MarkerApi D3D12_MARKER_API_RESOLVEENCODEROUTPUTMETADATA = MarkerApi.ResolveEncoderOutputMetadata;
+	public const MarkerApi D3D12_MARKER_API_BARRIER = MarkerApi.Barrier;
+	public const MarkerApi D3D12_MARKER_API_BEGIN_COMMAND_LIST = MarkerApi.BeginCommandList;
+	public const MarkerApi D3D12_MARKER_API_DISPATCHGRAPH = MarkerApi.Dispatchgraph;
+	public const MarkerApi D3D12_MARKER_API_SETPROGRAM = MarkerApi.Setprogram;
+	public const MarkerApi D3D12_MARKER_API_ENCODEFRAME1 = MarkerApi.Encodeframe1;
+	public const MarkerApi D3D12_MARKER_API_RESOLVEENCODEROUTPUTMETADATA1 = MarkerApi.Resolveencoderoutputmetadata1;
+	public const MarkerApi D3D12_MARKER_API_RESOLVEINPUTPARAMLAYOUT = MarkerApi.Resolveinputparamlayout;
+	public const MarkerApi D3D12_MARKER_API_PROCESSFRAMES2 = MarkerApi.Processframes2;
+	public const MarkerApi D3D12_MARKER_API_SET_WORK_GRAPH_MAXIMUM_GPU_INPUT_RECORDS = MarkerApi.SetWorkGraphMaximumGpuInputRecords;
 	public const AutoBreadcrumbOperation D3D12_AUTO_BREADCRUMB_OP_SETMARKER = AutoBreadcrumbOperation.SetMarker;
 	public const AutoBreadcrumbOperation D3D12_AUTO_BREADCRUMB_OP_BEGINEVENT = AutoBreadcrumbOperation.BeginEvent;
 	public const AutoBreadcrumbOperation D3D12_AUTO_BREADCRUMB_OP_ENDEVENT = AutoBreadcrumbOperation.EndEvent;
@@ -2075,7 +2189,11 @@ public static partial class Apis
 	public const AutoBreadcrumbOperation D3D12_AUTO_BREADCRUMB_OP_BEGIN_COMMAND_LIST = AutoBreadcrumbOperation.BeginCommandList;
 	public const AutoBreadcrumbOperation D3D12_AUTO_BREADCRUMB_OP_DISPATCHGRAPH = AutoBreadcrumbOperation.Dispatchgraph;
 	public const AutoBreadcrumbOperation D3D12_AUTO_BREADCRUMB_OP_SETPROGRAM = AutoBreadcrumbOperation.Setprogram;
+	public const AutoBreadcrumbOperation D3D12_AUTO_BREADCRUMB_OP_ENCODEFRAME1 = AutoBreadcrumbOperation.Encodeframe1;
+	public const AutoBreadcrumbOperation D3D12_AUTO_BREADCRUMB_OP_RESOLVEENCODEROUTPUTMETADATA1 = AutoBreadcrumbOperation.Resolveencoderoutputmetadata1;
+	public const AutoBreadcrumbOperation D3D12_AUTO_BREADCRUMB_OP_RESOLVEINPUTPARAMLAYOUT = AutoBreadcrumbOperation.Resolveinputparamlayout;
 	public const AutoBreadcrumbOperation D3D12_AUTO_BREADCRUMB_OP_PROCESSFRAMES2 = AutoBreadcrumbOperation.Processframes2;
+	public const AutoBreadcrumbOperation D3D12_AUTO_BREADCRUMB_OP_SET_WORK_GRAPH_MAXIMUM_GPU_INPUT_RECORDS = AutoBreadcrumbOperation.SetWorkGraphMaximumGpuInputRecords;
 	public const DredVersion D3D12_DRED_VERSION_1_0 = DredVersion.V1_0;
 	public const DredVersion D3D12_DRED_VERSION_1_1 = DredVersion.V1_1;
 	public const DredVersion D3D12_DRED_VERSION_1_2 = DredVersion.V1_2;
@@ -2194,7 +2312,7 @@ public static partial class Apis
 	public const BarrierLayout D3D12_BARRIER_LAYOUT_COMPUTE_QUEUE_SHADER_RESOURCE = BarrierLayout.ComputeQueueShaderResource;
 	public const BarrierLayout D3D12_BARRIER_LAYOUT_COMPUTE_QUEUE_COPY_SOURCE = BarrierLayout.ComputeQueueCopySource;
 	public const BarrierLayout D3D12_BARRIER_LAYOUT_COMPUTE_QUEUE_COPY_DEST = BarrierLayout.ComputeQueueCopyDest;
-	public const BarrierLayout D3D12_BARRIER_LAYOUT_VIDEO_QUEUE_COMMON = BarrierLayout.VideoQueueCommon;
+	public const BarrierLayout D3D12_BARRIER_LAYOUT_DIRECT_QUEUE_GENERIC_READ_COMPUTE_QUEUE_ACCESSIBLE = BarrierLayout.DirectQueueGenericReadComputeQueueAccessible;
 	public const BarrierSync D3D12_BARRIER_SYNC_NONE = BarrierSync.None;
 	public const BarrierSync D3D12_BARRIER_SYNC_ALL = BarrierSync.All;
 	public const BarrierSync D3D12_BARRIER_SYNC_DRAW = BarrierSync.Draw;
@@ -3297,6 +3415,8 @@ public static partial class Apis
 	public const MessageId D3D12_MESSAGE_ID_BYTECODE_VALIDATION_ERROR = MessageId.BytecodeValidationError;
 	public const MessageId D3D12_MESSAGE_ID_FENCE_ZERO_WAIT = MessageId.FenceZeroWait;
 	public const MessageId D3D12_MESSAGE_ID_NON_COMMON_RESOURCE_IN_COPY_QUEUE = MessageId.NonCommonResourceInCopyQueue;
+	public const MessageId D3D12_MESSAGE_ID_CREATEPIPELINESTATE_MULTIPLE_ROOT_SIGNATURES_DEFINED = MessageId.CreatePipelineStateMultipleRootSignaturesDefined;
+	public const MessageId D3D12_MESSAGE_ID_TEXTURE_BARRIER_INVALID_FLAGS = MessageId.TextureBarrierInvalidFlags;
 	public const MessageCallbackFlags D3D12_MESSAGE_CALLBACK_FLAG_NONE = MessageCallbackFlags.None;
 	public const MessageCallbackFlags D3D12_MESSAGE_CALLBACK_IGNORE_FILTERS = MessageCallbackFlags.IgnoreFilters;
 	public const DeviceFactoryFlags D3D12_DEVICE_FACTORY_FLAG_NONE = DeviceFactoryFlags.None;
@@ -3315,6 +3435,8 @@ public static partial class Apis
 	public const DeviceFlags D3D12_DEVICE_FLAG_SHADER_INSTRUMENTATION_ENABLED = DeviceFlags.ShaderInstrumentationEnabled;
 	public const DeviceFlags D3D12_DEVICE_FLAG_AUTO_DEBUG_NAME_ENABLED = DeviceFlags.AutoDebugNameEnabled;
 	public const DeviceFlags D3D12_DEVICE_FLAG_FORCE_LEGACY_STATE_VALIDATION = DeviceFlags.ForceLegacyStateValidation;
+	public const StateObjectDatabaseFlags D3D12_STATE_OBJECT_DATABASE_FLAG_NONE = StateObjectDatabaseFlags.None;
+	public const StateObjectDatabaseFlags D3D12_STATE_OBJECT_DATABASE_FLAG_READ_ONLY = StateObjectDatabaseFlags.ReadOnly;
 	public const AxisShadingRate D3D12_AXIS_SHADING_RATE_1X = AxisShadingRate.Rate1x;
 	public const AxisShadingRate D3D12_AXIS_SHADING_RATE_2X = AxisShadingRate.Rate2x;
 	public const AxisShadingRate D3D12_AXIS_SHADING_RATE_4X = AxisShadingRate.Rate4x;
@@ -3347,5 +3469,14 @@ public static partial class Apis
 	public const ShaderVersionType D3D12_SHVER_AMPLIFICATION_SHADER = ShaderVersionType.AmplificationShader;
 	public const ShaderVersionType D3D12_SHVER_NODE_SHADER = ShaderVersionType.NodeShader;
 	public const ShaderVersionType D3D12_SHVER_RESERVED0 = ShaderVersionType.Reserved0;
+	public const CompilerValueType D3D12_COMPILER_VALUE_TYPE_OBJECT_CODE = CompilerValueType.ObjectCode;
+	public const CompilerValueType D3D12_COMPILER_VALUE_TYPE_METADATA = CompilerValueType.Metadata;
+	public const CompilerValueType D3D12_COMPILER_VALUE_TYPE_DEBUG_PDB = CompilerValueType.DebugPdb;
+	public const CompilerValueType D3D12_COMPILER_VALUE_TYPE_PERFORMANCE_DATA = CompilerValueType.PerformanceData;
+	public const CompilerValueTypeFlags D3D12_COMPILER_VALUE_TYPE_FLAGS_NONE = CompilerValueTypeFlags.None;
+	public const CompilerValueTypeFlags D3D12_COMPILER_VALUE_TYPE_FLAGS_OBJECT_CODE = CompilerValueTypeFlags.ObjectCode;
+	public const CompilerValueTypeFlags D3D12_COMPILER_VALUE_TYPE_FLAGS_METADATA = CompilerValueTypeFlags.Metadata;
+	public const CompilerValueTypeFlags D3D12_COMPILER_VALUE_TYPE_FLAGS_DEBUG_PDB = CompilerValueTypeFlags.DebugPdb;
+	public const CompilerValueTypeFlags D3D12_COMPILER_VALUE_TYPE_FLAGS_PERFORMANCE_DATA = CompilerValueTypeFlags.PerformanceData;
 }
 

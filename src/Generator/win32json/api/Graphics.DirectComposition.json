@@ -4525,6 +4525,64 @@
 			}
 		]
 	}
+	,{
+		"Name":"IDCompositionDynamicTexture"
+		,"Architectures":[]
+		,"Platform":null
+		,"Kind":"Com"
+		,"Guid":"a1de1d3f-6405-447f-8e95-1383a34b0277"
+		,"Interface":{"Kind":"ApiRef","Name":"IUnknown","TargetKind":"Com","Api":"System.Com","Parents":[]}
+		,"Methods":[
+			{
+				"Name":"SetTexture"
+				,"SetLastError":false
+				,"ReturnType":{"Kind":"ApiRef","Name":"HRESULT","TargetKind":"Default","Api":"Foundation","Parents":[]}
+				,"ReturnAttrs":[]
+				,"Architectures":[]
+				,"Platform":null
+				,"Attrs":[]
+				,"Params":[
+					{"Name":"pTexture","Type":{"Kind":"ApiRef","Name":"IDCompositionTexture","TargetKind":"Com","Api":"Graphics.DirectComposition","Parents":[]},"Attrs":["In"]}
+					,{"Name":"pRects","Type":{"Kind":"LPArray","NullNullTerm":false,"CountConst":-1,"CountParamIndex":2,"Child":{"Kind":"ApiRef","Name":"RECT","TargetKind":"Default","Api":"Foundation","Parents":[]}},"Attrs":["In","Const"]}
+					,{"Name":"rectCount","Type":{"Kind":"Native","Name":"UIntPtr"},"Attrs":["In"]}
+				]
+			}
+			,{
+				"Name":"SetTexture"
+				,"SetLastError":false
+				,"ReturnType":{"Kind":"ApiRef","Name":"HRESULT","TargetKind":"Default","Api":"Foundation","Parents":[]}
+				,"ReturnAttrs":[]
+				,"Architectures":[]
+				,"Platform":null
+				,"Attrs":[]
+				,"Params":[
+					{"Name":"pTexture","Type":{"Kind":"ApiRef","Name":"IDCompositionTexture","TargetKind":"Com","Api":"Graphics.DirectComposition","Parents":[]},"Attrs":["In"]}
+				]
+			}
+		]
+	}
+	,{
+		"Name":"IDCompositionDevice5"
+		,"Architectures":[]
+		,"Platform":null
+		,"Kind":"Com"
+		,"Guid":"2c6bebfe-a603-472f-af34-d2443356e61b"
+		,"Interface":{"Kind":"ApiRef","Name":"IDCompositionDevice4","TargetKind":"Com","Api":"Graphics.DirectComposition","Parents":[]}
+		,"Methods":[
+			{
+				"Name":"CreateDynamicTexture"
+				,"SetLastError":false
+				,"ReturnType":{"Kind":"ApiRef","Name":"HRESULT","TargetKind":"Default","Api":"Foundation","Parents":[]}
+				,"ReturnAttrs":[]
+				,"Architectures":[]
+				,"Platform":null
+				,"Attrs":[]
+				,"Params":[
+					{"Name":"compositionDynamicTexture","Type":{"Kind":"PointerTo","Child":{"Kind":"ApiRef","Name":"IDCompositionDynamicTexture","TargetKind":"Com","Api":"Graphics.DirectComposition","Parents":[]}},"Attrs":["Out"]}
+				]
+			}
+		]
+	}
 ]
 
 ,"Functions":[

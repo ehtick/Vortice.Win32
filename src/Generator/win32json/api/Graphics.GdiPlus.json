@@ -3944,6 +3944,8 @@
 			,{"Name":"GdiplusStartupNoSetRound","Value":1}
 			,{"Name":"GdiplusStartupSetPSValue","Value":2}
 			,{"Name":"GdiplusStartupReserved0","Value":4}
+			,{"Name":"GdiplusStartupReserved1","Value":8}
+			,{"Name":"GdiplusStartupReserved2","Value":16}
 			,{"Name":"GdiplusStartupTransparencyMask","Value":-16777216}
 		]
 		,"IntegerBase":"Int32"

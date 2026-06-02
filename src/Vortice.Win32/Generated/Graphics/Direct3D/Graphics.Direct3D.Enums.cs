@@ -1104,3 +1104,26 @@ public enum FormatComponentInterpretation
 	/// <unmanaged>D3DFCI_BIASED_FIXED_2_8</unmanaged>
 	D3DFCI_BIASED_FIXED_2_8 = 3,
 }
+
+/// <include file='../Direct3D.xml' path='doc/member[@name="D3D_SHADER_CACHE_APP_REGISTRATION_SCOPE"]/*' />
+/// <unmanaged>D3D_SHADER_CACHE_APP_REGISTRATION_SCOPE</unmanaged>
+public enum ShaderCacheAppRegistrationScope
+{
+	/// <include file='../Direct3D.xml' path='doc/member[@name="D3D_SHADER_CACHE_APP_REGISTRATION_SCOPE::D3D_SHADER_CACHE_APP_REGISTRATION_SCOPE_USER"]/*' />
+	/// <unmanaged>D3D_SHADER_CACHE_APP_REGISTRATION_SCOPE_USER</unmanaged>
+	User = 0,
+	/// <include file='../Direct3D.xml' path='doc/member[@name="D3D_SHADER_CACHE_APP_REGISTRATION_SCOPE::D3D_SHADER_CACHE_APP_REGISTRATION_SCOPE_SYSTEM"]/*' />
+	/// <unmanaged>D3D_SHADER_CACHE_APP_REGISTRATION_SCOPE_SYSTEM</unmanaged>
+	System = 1,
+}
+
+/// <include file='../Direct3D.xml' path='doc/member[@name="D3D_SHADER_CACHE_TARGET_FLAGS"]/*' />
+/// <unmanaged>D3D_SHADER_CACHE_TARGET_FLAGS</unmanaged>
+[Flags]
+public enum ShaderCacheTargetFlags
+{
+	None = 0,
+	/// <include file='../Direct3D.xml' path='doc/member[@name="D3D_SHADER_CACHE_TARGET_FLAGS::D3D_SHADER_CACHE_TARGET_FLAG_NONE"]/*' />
+	/// <unmanaged>D3D_SHADER_CACHE_TARGET_FLAG_NONE</unmanaged>
+	D3D_SHADER_CACHE_TARGET_FLAG_NONE = 0,
+}
